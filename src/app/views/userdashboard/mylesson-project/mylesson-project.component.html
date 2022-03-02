@@ -1,0 +1,376 @@
+<div class="col-lg-12">
+   <div class="card">
+      <mat-accordion>
+         <!-- #enddocregion basic-panel -->
+         <mat-expansion-panel #expansionPanel [hideToggle]="true" style="display: contents; pointer-events: none;" [expanded]="true">
+            <mat-expansion-panel-header style="margin-left: 40%; background: transparent;">
+               <mat-panel-description>
+                 <button  class="toggle-panel bi bi-chevron-down" (click)="$event.stopPropagation(); expansionPanel.toggle(); showandhide();" >Filter By <i id="id005"class="fa fa-chevron-up"></i> </button>
+               </mat-panel-description>
+               <div class="float-right" id="id006" style="pointer-events: all; display: none;">
+                  <div class="row float-right">
+                     <select style="margin-left: -15%; border-radius: 5%"  name="dropdown" [(ngModel)]="sortbyBD" class="form-control" 
+                        (change)="onselectSoftBy($event)" (click)="$event.stopPropagation();">
+                        <option value="" selected>Sort By</option>
+                        <option value="likes">Most Liked</option>
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>   
+                     </select>
+                  </div>
+               </div>
+
+            </mat-expansion-panel-header>
+            <div class="card-body p-4 clearfix" style="pointer-events:all; display: block;" id="id04">
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" [(ngModel)]="selectLessonType"
+                              (change)="togglelessonFlow($event)">
+                              <option value="All Lesson type">Select Lesson Types</option>
+                              <option value="1">Project</option>
+                              <option value="2">Process</option>
+                           </select>
+                        </div>
+                        <!-- <div class="help-tip">
+                           <p>Please insert Project type</p>
+                        </div> -->
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-sm-12">
+                           <!-- <input type="text" placeholder="Search" name="searchString" [(ngModel)]="searchString" (keyup)="getfreesearchByFilter($event)"> -->
+                           <div class="search-hero  has-search ">
+                              <span class="fa fa-search form-control-feedback"></span>
+                              <input type="text" class="form-control"  placeholder="Enter text to search..."
+                                 [(ngModel)]="searchedKeyword" >
+                           </div>
+
+                           <!-- <input type="text" #myinput [(ngModel)]="searchname" placeholder="enter your search terms" (input)="getfreesearchByFilter(searchname)"/> -->
+
+                        </div>
+                        <!-- <div class="help-tip">
+                           <p>Please insert Project type</p>
+                        </div> -->
+                     </div>
+                  </div>
+
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectProjecttype($event)">
+                              <option value="All Project type">Select Project Types</option>
+                              <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+                                 {{projectype.Name}}
+                              </option>
+                           </select>
+                        </div>
+                        <!-- <div class="help-tip">
+                           <p>Please insert Project type</p>
+                        </div> -->
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectProject($event)">
+                              <option value="">Select Projects</option>
+                              <option *ngFor="let project of mappingProjectTypeAndProject"
+                                 value="{{project.projectID}}">
+                                 {{project.Name}}</option>
+                           </select>
+                        </div>
+                        <!-- <div class="help-tip">
+                           <p>Please insert Phase</p>
+                        </div> -->
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown class="selectdiv cssformultiselect" [placeholder]="'Select Phases'"
+                              [data]="phaseDropdownList" [(ngModel)]="selectedPhases"
+                              [settings]="dropdownSettingsWithoutSearch" (onSelect)="onPhaseSelect($event)"
+                              (onDeSelect)="onPhaseSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown [placeholder]="'Select Milestones'" [data]="milestoneDropdownList"
+                             class="selectdiv cssformultiselect" [(ngModel)]="selectedMilestone"
+                              [settings]="dropdownSettingsWithoutSearch" (onSelect)="onMilestoneSelect($event)"
+                              (onDeSelect)=onMilestoneSelect($event)>
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <tag-input [theme]="'minimal'" [ngModel]="_Keywords" [separatorKeyCodes]="[186,59]"
+                              [placeholder]="'Select Keywords'" [secondaryPlaceholder]="'Type here to search keyword'"
+                              [ngModelOptions]="{standalone: true}" (onAdd)="addIgnoreColumn($event)"
+                              (onRemove)="onKeywordsRemoved($event)" theme='bootstrap'>
+                              <tag-input-dropdown [autocompleteItems]="keywordsAsObjects" [displayBy]="'Name'"
+                                 [identifyBy]="'ID'">
+                              </tag-input-dropdown>
+                           </tag-input>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectFunction($event)">
+                              <option value="" selected>Select Functions</option>
+                              <option *ngFor="let function of functionAsObjects" value="{{function.ID}}">
+                                 {{function.Name}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div> -->
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown  class="selectdiv cssformultiselect" [placeholder]="'Select Lifecycles'"
+                              [data]="lifecycleDropdownList" [(ngModel)]="selectedlifecycle"
+                              [settings]="dropdownSettingsWithSearch" (onSelect)="onLifecycleSelect($event)"
+                              (onDeSelect)="onLifecycleSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+
+
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown  class="selectdiv cssformultiselect" [placeholder]="'Select Functions'"
+                              [data]="functionDropdownList" [(ngModel)]="selectedFunction"
+                              [settings]="dropdownSettingsWithSearch" (onSelect)="onFunctionSelect($event)"
+                              (onDeSelect)="onFunctionSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectDepartment($event)">
+                              <option value="" selected>Select Departments</option>
+                              <option *ngFor="let department of departmentAsObjects" value="{{department.ID}} ">
+                                 {{department.Name}}</option>
+                           </select>
+                        </div>
+                     </div>
+                  </div> -->
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown  class="selectdiv cssformultiselect" [placeholder]="'Select Departments'"
+                              [data]="departmentDropdownList" [(ngModel)]="selectedDepartment"
+                              [settings]="dropdownSettingsWithSearch" (onSelect)="onDepartmentSelect($event)"
+                              (onDeSelect)="onDepartmentSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectLessontype($event)">
+                              <option value="" selected>Select Type of Lesson</option>
+                              <option *ngFor="let lessontype of lessontypeAsObjects" value="{{lessontype.ID}} ">
+                                 {{lessontype.Name}}</option>
+                           </select>
+                        </div>
+                        <!-- <div class="help-tip">
+                           <p>Please insert All Impact level</p>
+                        </div> -->
+                     </div>
+                  </div>
+
+                  <!-- <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectImpectcategory($event)">
+                              <option value="" selected>Select Impact Categories</option>
+                              <option *ngFor="let category of categoriesAsObjects" value="{{category.ID}}">{{category.Name}}
+                              </option>
+                           </select>
+                        </div>
+                     </div>
+                  </div> -->
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <ng-multiselect-dropdown  class="selectdiv cssformultiselect" [placeholder]="'Select Impact Categories'"
+                              [data]="categoriesAsObjects" [(ngModel)]="selectedImpactCategories"
+                              [settings]="dropdownSettingsWithoutSearch" (onSelect)="onImpactCategoriesSelect($event)"
+                              (onDeSelect)="onImpactCategoriesSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                           <select class="form-control" (change)="onselectImpectlevel($event)">
+                              <option value="" selected>Select Impact Levels</option>
+                              <option *ngFor="let impectlevel of impactlevelAsObjects" value="{{impectlevel.ID}}">
+                                 {{impectlevel.Name}}</option>
+                           </select>
+                        </div>
+      
+                     </div>
+                  </div> -->
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12 ">
+                           <ng-multiselect-dropdown  class="selectdiv cssformultiselect" [placeholder]="'Select Impact Levels'"
+                              [data]="impactlevelAsObjects" [(ngModel)]="selectedImpactLevels"
+                              [settings]="dropdownSettingsWithoutSearch" (onSelect)="onImpactLevelSelect($event)"
+                              (onDeSelect)="onImpactLevelSelect($event)">
+                           </ng-multiselect-dropdown>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12">
+                        <select  name="dropdown"  class="form-control" [(ngModel)]="implemented"
+                        (change)="onselectuserusefullesson($event)">
+                           <option value="" selected>Select Implementation</option>
+                           <option value="flag">Implemented</option>
+                           <option value="flag1">Not Implemented</option>
+                        </select>
+                        </div>
+                     </div>
+                     </div>
+
+                  <div class="col-sm-3">
+                     <div class="form-group row">
+                        <div class="col-md-12" style="padding-top: 8px;">
+                           <a href="javascript:void(0);" (click)="resetFilter()" class="ng-star-inserted">Clear All
+                              Filters</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row float-right">
+                  <select style="margin-left: -15%;" name="dropdown" [(ngModel)]="sortbyBD" class="form-control"
+                     (change)="onselectSoftBy($event)">
+                     <option value="" selected>Sort By</option>
+                     <option value="likes">Most Liked</option>
+                     <option value="newest">Newest</option>
+                     <option value="oldest">Oldest</option>
+                     <!-- <option value="1"></option>
+                     <option value="2">Best Practice</option> -->
+
+                  </select>
+               </div>
+            </div>
+
+         </mat-expansion-panel>
+      </mat-accordion>
+   </div>
+</div>
+<div class="col-12 col-lg-12"
+   *ngFor="let lesson of results | filter:searchedKeyword | paginate: { itemsPerPage: 5, currentPage: p }">
+   <div class="card" style="border-radius: 10px;">
+      <div class="card-body p-3 clearfix">
+
+         <div class="float-right">
+            <a> <button class="btn btn-primary float-right" (click)="getidinurl(lesson.ID)"
+                  style="border-radius: 4px; margin-right: 22%;padding: 0;height: 31px;" type="button" *ngIf="show"> Edit </button></a>
+                  <br>
+                  <i [ngClass]="hasuser ? 'cssforuser' : '' "  class="fa fa-thumbs-up marginforsmall" style="font-size:19px;color:#20a8d8;"></i>
+                  <p class="float-right cssforlikes">{{lesson.likes}}</p>
+                  <!-- <a (click)="getidinurl(lesson.ID)" *ngIf="show">
+                     <i class="fa fa-edit editcss"  ></i>
+                  </a> -->
+            <!-- <button (click)="likebutton()"> -->
+            <!-- </button> -->
+            <!-- <div class="h4 text-primary mb-0" style="cursor: pointer;"><strong style= "color:gray;">Title : </strong><a (click)="getidlesson(lesson.ID)">{{lesson.Title}}</a></div> -->
+         </div>
+         
+         <!-- <div class="float-right" style="margin-right:-75px;">
+            <a>
+               <p class="float-right mar" style="margin-right: -8px; font-size: 12px;">{{lesson.likes}}</p>
+
+  
+               <i class="fa fa-thumbs-up mar float-right" style="font-size:20px;color:#20a8d8;"></i>
+            </a>
+         </div> -->
+         <!-- <div class="h7 text-primary mb-0" style="cursor: pointer;"><strong style="color:gray;">Title : </strong><a
+               (click)="getidlesson(lesson.ID)"><strong>{{lesson.Title}}</strong></a></div>
+         <div class="text-muted font-s"><strong> Project Name : </strong> {{lesson.Name}}</div>
+         <div class="text-muted font-s"><strong> Type : </strong> {{lesson.Type}}</div>
+         <div class="text-muted font-s wid90"><strong> Recommendation : </strong> {{lesson.Recommendation}} <i
+               class="fa fa-thumbs-up float-right" style="font-size:20px;color:#20a8d8;"></i>
+            <p class="float-right cssforlikes" >{{lesson.likes}}</p>
+         </div>
+
+         <div class="text-muted font-s"><strong> Created Date : </strong> {{lesson.CreatedDate  | date }}</div> -->
+         <div class="row">
+            <div class="col-sm-3">
+               <div class="form-group row">
+                  <div class="col-md-12 text-muted">
+                     <strong class="textcolor" style="cursor: pointer;">Title : </strong><a (click)="getidlesson(lesson.ID)"><strong
+                           class="h7 text-primary mb-0" style="cursor: pointer;">{{lesson.Title}}</strong></a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="form-group row">
+                  <div class="col-md-12 text-muted">
+                     <strong class="textcolor" > Project Name : </strong> {{lesson.Name}}
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-2">
+               <div class="form-group row">
+                  <div class="col-md-11 text-muted">
+                     <strong class="textcolor " > Type : </strong> {{lesson.Type}}
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-3">
+               <div class="form-group row">
+                  <div class="col-md-12 text-muted">
+                     <strong class="textcolor"> Created Date : </strong> {{lesson.CreatedDate
+                     | date }}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="text-muted font-s wid90" style="margin-left: 15px; "><strong class="textcolor"> Recommendation : </strong>
+            {{lesson.Recommendation}} 
+            <!-- <i class="fa fa-thumbs-up float-right" style="font-size:20px;color:#20a8d8; "></i>
+            <p class="float-right cssforlikes">{{lesson.likes}}</p> -->
+         </div>
+         <!-- <i class="fa fa-thumbs-up marginforsmall" style="font-size:20px;color:#20a8d8;"></i>
+         <p class="float-right cssforlikes">{{lesson.likes}}</p> -->
+         <!-- <div class="text-muted font-s"><strong> LPN / PPN  : </strong> {{lesson.LPN}} </div>
+         <div class="text-muted font-s"><strong> Created By  : </strong> {{lesson.UserName}} &nbsp;|&nbsp; <strong>Created Date: </strong> {{lesson.UpdatedDate | date }} <span *ngIf="lesson.attachments"> &nbsp;|&nbsp; <a href="{{_baseURL}}{{lesson.attachments}}" target="_blank" ><i class="fa fa-download float-right font-lg" style="cursor: pointer" ></i> </a></span></div> -->
+      </div>
+   </div>
+</div>
+<!--Paginaton-->
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<!--end Pagination-->
+<div class="col-12 col-lg-12" *ngIf="noResult">
+   <div class="alert alert-warning" role="alert" ng-reflect-ng-class="" ng-reflect-klass="alert alert-warning">
+      <strong>No results found</strong>
+   </div>
+</div>

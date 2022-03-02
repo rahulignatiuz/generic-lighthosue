@@ -1,0 +1,418 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          Update this lesson
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" [formGroup]="editLessonForm" (ngSubmit)="editLesson(editLessonForm)">
+            <tabset>
+              <tab heading="Project Details" [active]="projectTab" [disabled]="projectdTab">
+                <div class="row">
+                  <ng-container *ngFor="let field of results">
+                    <div *ngIf="field.Type == 'text' && field.Section == 'projectdetails'" class="col-sm-6">
+                      <div formGroupName="text" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input type="field.Type" formControlName="{{field.Name}}" class="form-control"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('text',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}">
+                          <div
+                            *ngIf="field.Required && getValidation('text',field.Name).invalid && (getValidation('text',field.Name).dirty || getValidation('text',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('text',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'autocomplete' && field.Section == 'projectdetails'" class="col-sm-6">
+                      <div formGroupName="autocomplete" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <select class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('autocomplete',field.Name).errors } "
+                            (change)="changeParent($event.target.value, field._id)">
+                            <option value="" selected>{{field.Placeholder}}</option>
+                            <ng-container *ngIf="!field.ParentLessonField">
+                              <option *ngFor="let options of filterItemsOfType(field._id)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                            <ng-container *ngIf="field.ParentLessonField">
+                              <option *ngFor="let options of filterSubElement(field)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                          </select>
+                          <div
+                            *ngIf="field.Required && getValidation('autocomplete',field.Name).invalid && (getValidation('autocomplete',field.Name).dirty || getValidation('autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'input_autocomplete' && field.Section == 'projectdetails'" class="col-sm-6">
+                      <div class="form-group row" formGroupName="input_autocomplete">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <tag-input *ngIf="!field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" (onAdd)="changeParent($event, field._id)"
+                            [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true"
+                              [autocompleteItems]="filterItemsOfType(field._id)" [displayBy]="'Name'"
+                              [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <tag-input *ngIf="field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="filterSubElement(field)"
+                              [displayBy]="'Name'" [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <div
+                            *ngIf="field.Required && getValidation('input_autocomplete',field.Name).invalid && (getValidation('input_autocomplete',field.Name).dirty || getValidation('input_autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('input_autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'textarea' && field.Section == 'projectdetails'" class="col-sm-6">
+                      <div formGroupName="textarea" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <textarea class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('textarea',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}"></textarea>
+                          <div
+                            *ngIf="field.Required && getValidation('textarea',field.Name).invalid && (getValidation('textarea',field.Name).dirty || getValidation('textarea',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('textarea',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'file' && field.Section == 'projectdetails'" class="col-sm-6">
+                      <div class="form-group row" formGroupName="files">
+                        <label class="col-md-3 col-form-label" for="file-input">{{field.Label}}<span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input formControlName="{{field.Name}}" (change)="onFileChange($event)"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('files',field.Name).errors } "
+                            class="form-control filellm" type="file">
+                          <div
+                            *ngIf="field.Required && getValidation('files',field.Name).invalid && (getValidation('files',field.Name).dirty || getValidation('files',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('files',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="form-actions col-sm-12 text-right">
+                    <button class="btn btn-primary borderbtn" type="button" (click)="tabChange(2)">Next<i
+                        class="fa fa-angle-double-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </tab>
+              <tab heading="Lesson Details" [active]="lessonTab" [disabled]="lessondTab">
+                <div class="row">
+                  <ng-container *ngFor="let field of results">
+                    <div *ngIf="field.Type == 'text' && field.Section == 'lessondetails'" class="col-sm-6">
+                      <div formGroupName="text" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input type="field.Type" formControlName="{{field.Name}}" class="form-control"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('text',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}">
+                          <div
+                            *ngIf="field.Required && getValidation('text',field.Name).invalid && (getValidation('text',field.Name).dirty || getValidation('text',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('text',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'autocomplete' && field.Section == 'lessondetails'" class="col-sm-6">
+                      <div formGroupName="autocomplete" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <select class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('autocomplete',field.Name).errors } "
+                            (change)="changeParent($event.target.value, field._id)" >
+                            <option value="" selected>{{field.Placeholder}}</option>
+                            <ng-container *ngIf="!field.ParentLessonField">
+                              <option *ngFor="let options of filterItemsOfType(field._id)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                            <ng-container *ngIf="field.ParentLessonField">
+                              <option *ngFor="let options of filterSubElement(field)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                          </select>
+                          <div
+                            *ngIf="field.Required && getValidation('autocomplete',field.Name).invalid && (getValidation('autocomplete',field.Name).dirty || getValidation('autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'input_autocomplete' && field.Section == 'lessondetails'" class="col-sm-6">
+                      <div class="form-group row" formGroupName="input_autocomplete">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <tag-input *ngIf="!field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" (onAdd)="changeParent($event, field._id)"
+                            [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true"
+                              [autocompleteItems]="filterItemsOfType(field._id)" [displayBy]="'Name'"
+                              [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <tag-input *ngIf="field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="filterSubElement(field)"
+                              [displayBy]="'Name'" [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <div
+                            *ngIf="field.Required && getValidation('input_autocomplete',field.Name).invalid && (getValidation('input_autocomplete',field.Name).dirty || getValidation('input_autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('input_autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'textarea' && field.Section == 'lessondetails'" class="col-sm-6">
+                      <div formGroupName="textarea" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <textarea class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('textarea',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}"></textarea>
+                          <div
+                            *ngIf="field.Required && getValidation('textarea',field.Name).invalid && (getValidation('textarea',field.Name).dirty || getValidation('textarea',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('textarea',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'file' && field.Section == 'lessondetails'" class="col-sm-6">
+                      <div class="form-group row" formGroupName="files">
+                        <label class="col-md-3 col-form-label" for="file-input">{{field.Label}}<span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input formControlName="{{field.Name}}" (change)="onFileChange($event)"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('files',field.Name).errors } "
+                            class="form-control filellm" type="file">
+                          <div
+                            *ngIf="field.Required && getValidation('files',field.Name).invalid && (getValidation('files',field.Name).dirty || getValidation('files',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('files',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="form-actions col-sm-12 text-right">
+                    <button class="btn btn-secondary borderbtn" type="button" (click)="tabChange(1)"> <i
+                        class="fa fa-angle-double-left"> </i>Back</button>
+                    <button class="btn btn-primary borderbtn" type="button" (click)="tabChange(3)">Next<i
+                        class="fa fa-angle-double-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </tab>
+              <tab heading="Additional Information" [active]="additionalTab" [disabled]="additionaldTab">
+                <div class="row">
+                  <ng-container *ngFor="let field of results">
+                    <div *ngIf="field.Type == 'text' && field.Section == 'additionalinformation'" class="col-sm-6">
+  
+                      <div formGroupName="text" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input type="field.Type" formControlName="{{field.Name}}" class="form-control"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('text',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}">
+                          <div
+                            *ngIf="field.Required && getValidation('text',field.Name).invalid && (getValidation('text',field.Name).dirty || getValidation('text',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('text',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                    </div>
+                    <div *ngIf="field.Type == 'autocomplete' && field.Section == 'additionalinformation'"
+                      class="col-sm-6">
+                      <div formGroupName="autocomplete" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <select class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('autocomplete',field.Name).errors } "
+                            (change)="changeParent($event.target.value, field._id)">
+                            <option value="" selected>{{field.Placeholder}}</option>
+                            <ng-container *ngIf="!field.ParentLessonField">
+                              <option *ngFor="let options of filterItemsOfType(field._id)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                            <ng-container *ngIf="field.ParentLessonField">
+                              <option *ngFor="let options of filterSubElement(field)" value="{{options._id}}">
+                                {{options.Name}}</option>
+                            </ng-container>
+                          </select>
+                          <div
+                            *ngIf="field.Required && getValidation('autocomplete',field.Name).invalid && (getValidation('autocomplete',field.Name).dirty || getValidation('autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'input_autocomplete' && field.Section == 'additionalinformation'"
+                      class="col-sm-6">
+                      <div class="form-group row" formGroupName="input_autocomplete">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <tag-input *ngIf="!field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" (onAdd)="changeParent($event, field._id)"
+                            [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true"
+                              [autocompleteItems]="filterItemsOfType(field._id)" [displayBy]="'Name'"
+                              [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <tag-input *ngIf="field.ParentLessonField" [theme]="'minimal'" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('input_autocomplete',field.Name).errors } "
+                            [maxItems]="1" [secondaryPlaceholder]="field.Placeholder">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="filterSubElement(field)"
+                              [displayBy]="'Name'" [identifyBy]="'_id'">
+                            </tag-input-dropdown>
+                          </tag-input>
+                          <div
+                            *ngIf="field.Required && getValidation('input_autocomplete',field.Name).invalid && (getValidation('input_autocomplete',field.Name).dirty || getValidation('input_autocomplete',field.Name).touched)">
+                            <div class="alert alert-danger"
+                              *ngIf="getValidation('input_autocomplete',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'textarea' && field.Section == 'additionalinformation'" class="col-sm-6">
+                      <div formGroupName="textarea" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">{{field.Label}} <span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <textarea class="form-control" formControlName="{{field.Name}}"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('textarea',field.Name).errors } "
+                            placeholder="{{field.Placeholder}}"></textarea>
+                          <div
+                            *ngIf="field.Required && getValidation('textarea',field.Name).invalid && (getValidation('textarea',field.Name).dirty || getValidation('textarea',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('textarea',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="field.Type == 'file' && field.Section == 'additionalinformation'" class="col-sm-6">
+                      <div class="form-group row" formGroupName="files">
+                        <label class="col-md-3 col-form-label" for="file-input">{{field.Label}}<span
+                            *ngIf="field.Required" class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                          <input formControlName="{{field.Name}}" (change)="onFileChange($event)"
+                            [ngClass]="{'has-error is-invalid': isSubmitted && getValidation('files',field.Name).errors } "
+                            class="form-control filellm" type="file">
+                          <div
+                            *ngIf="field.Required && getValidation('files',field.Name).invalid && (getValidation('files',field.Name).dirty || getValidation('files',field.Name).touched)">
+                            <div class="alert alert-danger" *ngIf="getValidation('files',field.Name).errors.required">
+                              {{field.Label}} is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="form-actions col-sm-12 text-right">
+                    <button class="btn btn-secondary borderbtn" type="button" (click)="tabChange(2)"> <i
+                        class="fa fa-angle-double-left"> </i>Back</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+                <div class="form-actions col-sm-12 text-right">
+                </div>
+              </tab>
+            </tabset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="text-center">
+            <i class="cui-circle-check icons font-5xl d-block mt-4 text-success"></i>
+            <p>Your lesson was successfully recorded.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="reloadaction()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div bsModal #validatedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="text-center">
+            <i class="cui-circle-x icons font-5xl d-block mt-4 text-danger"></i>
+            <p>Please fill required fields.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="close()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>

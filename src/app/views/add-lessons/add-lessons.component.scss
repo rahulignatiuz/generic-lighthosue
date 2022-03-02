@@ -1,0 +1,51 @@
+.forms {
+    width: 30%;
+    height: auto;
+    left: 36%;
+    top: 15%;
+    padding: 15px;
+}
+.cursorpointer{
+    cursor: pointer;
+}
+
+ .modal.show .modal-dialog{
+    transform: translate(0, 200px);
+}
+.fa-edit:hover{
+    color:#20a8d8;
+}
+.table-title{
+    color: rgb(17, 3, 3);
+    background:#f0f3f5;
+    padding: 15px;
+    height: 6vh;
+  }
+
+
+:host ::ng-deep .nav-tabs .nav-link.active {
+    border-color: transparent !important;
+    border-bottom-color: #007AC2 !important;
+}
+
+:host ::ng-deep .tab-content {
+     border-right-color: transparent !important;
+     border-bottom-color: transparent !important;
+     border-left-color: transparent !important;
+}
+
+:host ::ng-deep .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    border-color: transparent;
+}
+.minimal.ng2-tag-input {
+    border-bottom: none;
+}
+:host ::ng-deep .minimal.ng2-tag-input {
+    padding:0px 0px 0px 0.35rem !important;
+    border-bottom: none !important; 
+    border: 1px solid #e4e7ea !important;
+}
+:host ::ng-deep .ng2-tag-input__text-input {
+    height: 33px !important;
+    font-size: 0.785rem !important;
+}

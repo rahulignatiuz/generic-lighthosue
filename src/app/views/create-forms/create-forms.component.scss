@@ -1,0 +1,191 @@
+.table-title{
+    color: rgb(17, 3, 3);
+    background:#f0f3f5;
+    padding: 15px;
+  }
+  .table-title .btn {
+    color:#ffffff;
+    float: right;
+    font-size: 13px;
+    background: #20a8d8;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 20px;
+  
+  }
+  .table-title .btn i{
+  
+    font-size: 16px;
+  }
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+.clearfix{clear:both;}
+.pointer{cursor: pointer;}
+.ucfirst{text-transform: capitalize;}
+.min300{min-height:300px}
+.app-box{
+    padding: 10px;
+    margin-bottom:20px;
+    height: 230px;
+    background: #b5e8d4;
+    overflow: hidden;
+    box-shadow: 1px 1px 4px #ccc;
+}
+.app-box:hover{
+    box-shadow: 1px 1px 4px #999;
+}
+.app-box .remove{
+    position: absolute;
+    right: 21px;
+    top: 0px;
+    color: #545454;
+    display:none;
+}
+.app-box:hover .remove{
+    display:block;
+}
+.inline-btn{
+    background: #00b970;
+    padding: 1px 5px;
+    color: white;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.box{
+    padding: 10px;
+    margin-bottom:10px;
+    overflow: auto;
+    box-shadow: 1px 1px 4px #ddd;
+}
+.form-group .form-control{
+    font-size:inherit;
+    background-color: inherit;
+}
+
+.dndDropArea{
+    padding: 10px;
+    /* border: dotted #ddd 2px; */
+    background-color: #f5f5f5;
+    margin-top: 2%;
+}
+
+.dndDropArea.empty{
+    min-height:200px;
+    border: dotted #ddd 2px;
+    border-radius: 0.3rem;
+    
+}
+
+.field{
+    padding:5px;
+    margin-bottom:10px;
+    position: relative;
+}
+.field:hover{
+    box-shadow: 1px 1px 4px #ddd;
+}
+.toggle-Wrapper{
+    padding: 15px;
+    background: #d6d6d629;
+}
+.dndHandle{
+    cursor: pointer;
+    color: #999;
+}
+.dndDraggingSource{
+    opacity:0.3;
+}
+.dndPlaceholder{
+    background: rgb(206, 238, 238); border-radius: 2px; padding: 20px;
+    margin-bottom:10px;
+}
+.field .fa{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 24px;
+    vertical-align: middle;
+
+}
+
+.red{color:#d9534f}
+.fa-trash{color:#d9534f}
+.marginT60{
+    margin-top:60px;
+}
+
+.color-red{color:red;}
+.report-block{
+    padding:10px;
+    background:#f8f8f8;
+    margin-bottom:20px;
+}
+.report-block .row:nth-child(even){
+    background:#fff;
+}
+
+.ftheme{
+    width:100%;
+}
+
+.dndDropArea .field .fa{
+    opacity:0;
+}
+.dndDropArea .field:hover .fa{
+    opacity:1;
+}
+
+.colorpick{
+    height: 25px;
+    background: white;
+    border: none;
+}
+// h5{
+//     color: white;
+// }
+.bg-white {
+    // background-color: #fff !important;
+    background-color: #c7c7c7 !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+.fields {
+    margin-top: 7%;
+    margin-left: 7%;
+}
+.fontwhite{
+    color: white;
+}
+.backgroundcss{
+    background: #2f353a;
+}
+.dragbackground{
+    background: whitesmoke;
+}
+.example-action-button {
+    margin-top: 16px;
+  }
+  .forcursor{
+
+    cursor: pointer;
+    margin-left: 47%;
+    cursor: pointer;
+    margin-top: 1%;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  .swal2-popup{
+    width: 31em !important;
+  }
+
+.forms{
+    width: 30%;
+    height: auto;
+    left: 36%;
+    top: 15%;
+    padding: 15px;
+  }
+

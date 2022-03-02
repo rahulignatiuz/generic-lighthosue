@@ -1,0 +1,211 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="alert alert-success" *ngIf="showMessage" role="alert">
+    <a href="#" (click)="removeMessage();" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      By checked the Checkbox any field's is automatically converts into Required Fields in record lesson!
+    </div>
+    <div class="table-wrapper">
+      <div class="card-header">
+        View database forms
+      </div>
+      <div class="table-title">
+        <div class="row user-header">
+          <div class="col-sm-6">
+            <input type="radio" name="lesson" value="Project" [(ngModel)]="lessonField"
+              (change)="toggleLessonFlow(lessonField)">
+            <label for="project" style="margin-left: 5px;">Project</label>
+            <input *ngIf="showForProcess" type="radio" style="margin-left: 20px;" name="lesson" value="Process"
+              [(ngModel)]="lessonField" (change)="toggleLessonFlow(lessonField)">
+            <label *ngIf="showForProcess" for="Process" style="margin-left: 5px;">Process</label><br>
+          </div>
+        </div>
+      </div>
+      <table *ngIf="showResultsForProject" class="table table-hover shadow-lg bg-white user-data">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Label</th>
+            <th>Required field</th>
+            <th>Created Date</th>
+            <th>Action</th>
+            <th>Represent's On View Lessons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tabledata of results | paginate: { itemsPerPage: 10, currentPage: p }; let i=index ">
+            <td>{{tabledata.Type}}</td>
+            <td>{{tabledata.Label}}</td>
+            <td>{{tabledata.Required}}</td>
+            <td>{{tabledata.CreatedDate | date}}</td>
+            <td>
+              <a href="#" (click)="tableDataSettings(tabledata);" class="settings admin" title="" data-toggle="tooltip"
+                data-original-title="Settings"><i class="fa fa-edit icon fa-fw" aria-hidden="true"></i></a>
+              <a href="#" *ngIf="!isLessonAdded" (click)=tabledataDelete(tabledata._id) class="delete admin" title=""
+                data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-remove icon"></i></a>
+            </td>
+            <td>
+              <div *ngIf="tabledata.Checkbox == false" class="form-check">
+                <input #activeCheckbox
+                  (click)="checkboxForRecordLesson(tabledata,activeCheckbox);"
+                  class="form-check-input" type="checkbox" value="true" id="{{'flexCheckDefault'+ i}}">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Unchecked
+                </label>
+              </div>
+              <div *ngIf="tabledata.Checkbox == true" class="form-check">
+                <input #activeCheckbox
+                  (click)="checkboxForRecordLesson(tabledata,activeCheckbox);"
+                  class="form-check-input" type="checkbox" value="false" id="{{'flexCheckDefault'+ i}}" checked>
+                <label class="form-check-label" for="flexCheckDefault">
+                  checked
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table *ngIf="showResultsForProcess" class="table table-hover shadow-lg bg-white user-data">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Label</th>
+            <th>Required field</th>
+            <th>Created Date</th>
+            <th>Action</th>
+            <th>Represent's On View Lessons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tabledata of results | paginate: { itemsPerPage: 10, currentPage: p }">
+            <td>{{tabledata.Type}}</td>
+            <td>{{tabledata.Label}}</td>
+            <td>{{tabledata.Required}}</td>
+            <td>{{tabledata.CreatedDate | date}}</td>
+            <td>
+              <a href="#" (click)="tableDataSettings(tabledata);" class="settings admin" title="" data-toggle="tooltip"
+                data-original-title="Settings"><i class="fa fa-edit icon fa-fw" aria-hidden="true"></i></a>
+              <a href="#" *ngIf="!isLessonAdded" (click)=tabledataDelete(tabledata._id) class="delete admin" title=""
+                data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-remove icon"></i></a>
+            </td>
+            <td>
+              <div *ngIf="tabledata.Checkbox == false" class="form-check">
+                <input #activeCheckbox
+                  (click)="checkboxForRecordLesson(tabledata,activeCheckbox);"
+                  class="form-check-input" type="checkbox" value="true" id="{{'flexCheckDefault'+ i}}">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Unchecked
+                </label>
+              </div>
+              <div *ngIf="tabledata.Checkbox == true" class="form-check">
+                <input #activeCheckbox
+                  (click)="checkboxForRecordLesson(tabledata,activeCheckbox);"
+                  class="form-check-input" type="checkbox" value="false" id="{{'flexCheckDefault'+ i}}" checked>
+                <label class="form-check-label" for="flexCheckDefault">
+                  checked
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<div bsModal #editview="bs-modal" class="modal">
+  <form class="modal-content row forms" [formGroup]="editSettingForm" (ngSubmit)="editSetting()">
+    <h2 class="text-muted">Edit View-databaseform</h2>
+    <div class="form-group">
+      <label for="label">Label</label>
+      <input type="text" [(ngModel)]="sett_Label" formControlName="sett_Label" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="Type">Type</label>
+      <input type="text" [(ngModel)]="type" formControlName="type" class="form-control" disabled>
+    </div>
+    <div *ngIf="!isLessonAdded" class="form-group">
+      <label for="requirements">Required</label>
+      <select class="form-control" [(ngModel)]="sett_Requirements" formControlName="sett_Requirements"
+        name="sett_Requirements" required>
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="requirements">Select Type of Group</label>
+      <select class="form-control" [(ngModel)]="typeofGroup" formControlName="typeofGroup" name="typeofGroup" required>
+        <option value=null selected disabled>Select Type of Group</option>
+        <option value="projectdetails">Project Details</option>
+        <option value="lessondetails">Lesson Details</option>
+        <option value="additionalinformation">Additional Information</option>
+      </select>
+    </div>
+    <div *ngIf="(type == 'autocomplete' || type == 'input_autocomplete' ) && !isLessonAdded" class="form-group">
+      <label for="Type">Parent Field</label>
+      <select class="form-control" formControlName="parent_field" [(ngModel)]="parent_field">
+        <option value=null selected disabled>Select Parent Field</option>
+        <ng-container *ngFor="let options of filterItemsOfType(lessonField)">
+          <option [ngValue]="options._id">
+            {{options.Label}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-block btn-primary centerbtn">Save</button>
+  </form>
+</div>
+
+<div bsModal #deletedata="bs-modal" class="modal">
+  <form class="modal-content row forms">
+    <div class="modal-body">
+      <h3>Are you sure you want to delete this user?</h3>
+    </div>
+    <div class="modal-footer" style="border-top: 0px solid #c8ced3;">
+      <button type="button" (click)="deleteClose()" class="btn btn-primary">Cancel <i class="fa fa-close"> </i></button>
+      <button type="button" (click)="deleteDone()" class="btn btn-danger">Delete <i class="fa fa-trash"></i></button>
+    </div>
+  </form>
+</div>
+
+<div bsModal #editviewforprocess="bs-modal" class="modal">
+  <form class="modal-content row forms" [formGroup]="editSettingForm" (ngSubmit)="editSetting()">
+    <h2 class="text-muted">Edit View-databaseform</h2>
+    <div class="form-group">
+      <label for="label">Label</label>
+      <input type="text" [(ngModel)]="sett_Label" formControlName="sett_Label" class="form-control"
+        placeholder="First Name" autocomplete="first-name" required>
+    </div>
+    <div class="form-group">
+      <label for="Type">Type</label>
+      <input type="text" [(ngModel)]="type" formControlName="type" class="form-control" disabled>
+    </div>
+    <div *ngIf="!isLessonAdded" class="form-group">
+      <label for="requirements">Required</label>
+      <select class="form-control" [(ngModel)]="sett_Requirements" formControlName="sett_Requirements"
+        name="sett_Requirements" required>
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="requirements">Select Type of Group</label>
+      <select class="form-control" [(ngModel)]="typeofGroup" formControlName="typeofGroup" name="typeofGroup" required>
+        <option value=null selected disabled>Select Type of Group</option>
+        <option value="processdetails">Process Details</option>
+        <option value="lessondetails">Lesson Details</option>
+        <option value="additionalinformation">Additional Information</option>
+      </select>
+    </div>
+    <div *ngIf="(type == 'autocomplete' || type == 'input_autocomplete' ) && !isLessonAdded" class="form-group">
+      <label for="Type">Parent Field</label>
+      <select class="form-control" formControlName="parent_field" [(ngModel)]="parent_field">
+        <option value=null selected disabled>Select Parent Field</option>
+        <ng-container *ngFor="let options of filterItemsOfType(lessonField)">
+          <option [ngValue]="options._id">
+            {{options.Label}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-block btn-primary centerbtn">Save</button>
+  </form>
+</div>

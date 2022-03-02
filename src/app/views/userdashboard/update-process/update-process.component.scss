@@ -1,0 +1,417 @@
+
+
+.form-control,.btn {
+    border-radius: 0;    
+}
+.btn {
+    margin-left: 20px;
+}
+.minimal.ng2-tag-input {
+    border-bottom: none;
+} 
+
+:host ::ng-deep :focus {
+    outline: none;
+}
+
+.clearfix{
+    margin-bottom: 15px;
+}
+:host ::ng-deep .minimal.ng2-tag-input {
+    padding:0px 0px 0px 0.35rem !important;
+    border-bottom: none !important; 
+    border: 1px solid #e4e7ea !important;
+}
+
+:host ::ng-deep tag {
+    margin: 0px !important;
+    font-size: 0.875rem !important;
+    line-height:  30px !important;
+}
+
+:host ::ng-deep .ng2-tag-input__text-input {
+    height: 33px !important;
+    font-size: 0.785rem !important;
+}
+:host ::ng-deep select {
+    font-size: 0.875rem !important;
+}
+:host ::ng-deep .ng2-dropdown-menu { 
+    box-shadow:0 1px 2px 0 transparent !important;
+}
+
+:host ::ng-deep .tag-wrapper {
+ background: #efefef !important;
+ padding: 0 0.2rem !important; 
+}
+
+:host ::ng-deep .minimal tag {
+    background:transparent !important;   
+    box-shadow: none !important;
+    padding-left : 0px; 
+}
+
+.form-control:focus {
+    box-shadow:none;
+}
+
+:host ::ng-deep .nav-tabs .nav-link.active {
+    border-color: transparent !important;
+    border-bottom-color: #007AC2 !important;
+}
+
+:host ::ng-deep .tab-content {
+     border-right-color: transparent !important;
+     border-bottom-color: transparent !important;
+     border-left-color: transparent !important;
+}
+
+:host ::ng-deep .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    border-color: transparent;
+}
+
+:host ::ng-deep .btn-primary,.btn-secondary {
+    min-width: 80px;
+}
+
+:host ::ng-deep .searchIcon {
+    position: absolute;
+    right: 20px;
+    top: -18px;
+    color: #c8ced3;
+}
+
+:host ::ng-deep .modal {
+    top:30% !important;
+}
+
+:host ::ng-deep .Iconsuccess {
+color: #4dbd74;
+font-size: 5rem !important;
+}
+
+:host ::ng-deep .form-control.filellm {
+    height: auto !important;
+}
+
+:host ::ng-deep .ng-invalid.has-error.is-invalid {
+    border: 1px solid #f86c6b;
+}
+
+:host ::ng-deep .danger {
+    color: red;
+}
+
+
+:host ::ng-deep .keyword-msg {
+    color:#f86c6b;
+    font-size: 0.8em;
+    float: right;
+}
+button:disabled{
+    cursor: not-allowed !important;
+    background-color: rgb(80, 82, 82) !important;
+    color:white;
+    border-color: rgb(80, 82, 82) !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.multiselect-dropdown .dropdown-btn{
+    display: inline-block;
+    // border: 1px solid #adadad;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 1.1;
+    text-align: left;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border-radius:0px;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-btn {    
+    border-radius:0px;
+    border: none !important;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-btn .selected-item{    
+    border-radius:0px;
+    border: none !important;
+    background: white;
+    color:none;
+}
+:host::ng-deep .dropdown-down{
+   border-left: 0px !important;
+   border-right: 0px !important;
+}
+:host::ng-deep .dropdown-up{
+    border-left: 0px !important;
+    border-right: 0px !important;
+}
+.selectdiv:after {
+   content: '>';
+   font: 17px "Consolas", monospace;
+   color: #333;
+   -webkit-transform: rotate(90deg);
+   -moz-transform: rotate(90deg);
+   -ms-transform: rotate(90deg);
+   transform: rotate(90deg);
+   right: 21px;
+   top: 7px;
+   padding: 0 0 2px;         
+   position: absolute;
+   pointer-events: none
+}
+
+:host::ng-deep .multiselect-dropdown .dropdown-list{
+    position: absolute;
+    padding-top: 0px;
+    width: 100%;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    border-radius: 0px; 
+    background: #fff;
+     margin-top: 0px;
+     box-shadow: none;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-list .item1 .filter-textbox input[type=text]{
+padding: 0%;
+}
+
+:host::ng-deep .multiselect-item-checkbox input[type=checkbox] div[_ngcontent-yep-c4]:before{
+content: none !important;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-btn .selected-item{
+    border: none !important;
+    margin-right: 4px;
+    background: white !important; 
+    padding: 0 5px;
+    color:#737272 !important;
+    border-radius: 2px;
+    float: left;
+    cursor: auto;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox ::before {
+    content:none !important;
+    // color:#737272 !important;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox ::after {
+    content:none !important;
+    // color:#737272 !important;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox div{
+    // color: none !important;
+    color:#737272 !important;
+    padding: 0% !important;
+
+}
+:host::ng-deep .multiselect-dropdown .dropdown-btn .selected-item:hover{
+    box-shadow: none !important;
+}
+:host::ng-deep .multiselect-dropdown .dropdown-btn .selected-item a{
+    display: none !important;
+}
+.help-tip{
+    position: absolute;
+    top: 6px;
+    right: -7px;
+    text-align: center;
+    background-color: #BCDBEA;
+    border-radius: 50%;
+    width: 17px;
+    height: 22px;
+    font-size: 13px;
+    line-height: 21px;
+    cursor: pointer;
+}
+@media (max-width: 1536px){
+    .help-tip{
+        position: absolute;
+        top: 6px;
+        right: -7px;
+        text-align: center;
+        background-color: #BCDBEA;
+        border-radius: 50%;
+        width: 17px;
+        height: 22px;
+        font-size: 13px;
+        line-height: 13px !important;
+        cursor: pointer;
+    }
+    .help-tip table{    /* The tooltip */
+        display: none;
+        z-index: 50;
+        text-align: left;
+        background-color: #f0f3f5;
+        color:black;
+        padding: 20px;
+        width: 1272px !important;
+        position: absolute;
+        border-radius: 3px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        right: -4px;
+        font-size: 13px;
+        // line-height: 0.4;
+        // bottom: 14px;
+    }
+    .cssforsmall{
+        margin-bottom: 0% !important;
+        margin-top: 18px;
+    }
+    .cssforsmallscreen{
+        margin-bottom: 16%;
+        margin-top: 5%;
+    }
+    .highcssforsmall{
+        margin-bottom: 5%;
+    }
+    .issueforsmall{
+        margin-top: -11%;
+    }
+    .relationforsmall{
+        margin-top: -2%;
+    }
+    .norelational{
+        margin-top: -7%;
+    }
+}
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{    /* The tooltip */
+    display: none;
+    z-index: 50;
+    text-align: left;
+    background-color: #f0f3f5;
+    color:black;
+    padding: 20px;
+    width: 300px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: -4px;
+    font-size: 13px;
+    line-height: 0.4;
+    // bottom: 14px;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#ecf1f3;
+    right:7px;
+    // transform: scale(-1);
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+
+
+
+
+.help-tip:hover table{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip table{    /* The tooltip */
+    display: none;
+    z-index: 50;
+    text-align: left;
+    background-color: #f0f3f5;
+    color:black;
+    padding: 20px;
+    width: 1548px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: -4px;
+    font-size: 13px;
+    // line-height: 0.4;
+    // bottom: 14px;
+}
+
+.help-tip table:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#ecf1f3;
+    right:7px;
+    // transform: scale(-1);
+    top:-12px;
+}
+
+.help-tip table:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+li{
+    text-align: center;
+}
+ul{
+    margin-left: 0px;
+    margin-block-start: 0px;
+    padding-inline-start: 28px;
+}
+.borderbtn{
+    border-radius: 4px;
+}
+//Custome Error message 
+.custom-errMsg{
+    font-size: 12px !important;
+    color:red;
+    text-align: right;
+    margin-bottom: -10px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.remaning {
+    position:absolute;
+    bottom: 3px;
+    right:28px;
+    }

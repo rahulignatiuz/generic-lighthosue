@@ -1,0 +1,218 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <label style="color:#20a8d8; font-size:16px; margin-top: -1%;">Lesson Details</label>
+      <!-- <a href="https://lighthouse.ignatiuz.com/#/user/lessons"><button class="btn btn-primary float-right">Back</button></a> -->
+    </div>
+    <div class="container1">
+      <div class="card">
+        <div class="card-header " style="background-color: #0f69c4;">
+          <label for="fname" class="start" style="margin-top: -14px; color: white;">{{title}} </label>
+
+          <span class="float-right urlid" >
+            {{URLlessonID}}
+          </span>
+        </div>
+        <div class="row" style="margin-top: 2%;"></div>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="fname" class="start">Lesson Type</label>
+          </div>
+          <p class="start col">{{lessontype}}</p>
+
+          <div class="col-md-3">
+            <label for="fname" class="start">Project Type</label>
+          </div>
+          <p class="start col">{{_projectType}}</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <label for="fname" class="start">Project Name</label>
+          </div>
+          <p class="start col">{{projectname}}</p>
+          <div class="col-md-3">
+            <label for="fname" class="start">Project Phase</label>
+          </div>
+          <p class="start col">{{phase}}</p>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <label for="fname" class="start">Milestones</label>
+          </div>
+          <p class="start col">{{milestones}}</p>
+
+
+
+          <div class="col-md-3">
+            <label for="fname" class="start">Lifecycle</label>
+          </div>
+          <p class="start col">{{lifecycle}}</p>
+
+
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-3">
+            <label for="fname" class="start">Function</label>
+          </div>
+          <p class="start col">{{functions}}</p>
+
+          <div class="col-md-3">
+            <label for="fname" class="start">Department</label>
+          </div>
+          <p class="start col">{{department}}</p>
+
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-3">
+            <label for="fname" class="start">Keywords Name</label>
+          </div>
+          <p class="start col"><span *ngFor="let keyword of keyName; let isLast=last">{{keyword.Name}}{{isLast ? '' : ',
+              '}}</span></p>
+
+          <div class="col-md-3">
+            <label for="fname" class="start">Impact Category</label>
+          </div>
+          <p class="start col">{{impactcategory}}</p>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <label for="fname" class="start">Impact level</label>
+          </div>
+          <p class="start col">{{impactlevel}}</p>
+          <div class="col-md-3">
+            <label for="fname" class="start">Created by</label>
+          </div>
+          <p class="start col">{{Email}}</p>
+        </div>
+
+        <div class="row" *ngIf="showrootcouse">
+          <div class="col-25">
+            <label for="fname" class="start marginty">Root Cause</label>
+          </div>
+        </div>
+        <!-- <p *ngIf="showrootcouse" class="margintype bor">{{rootcouse}}</p> -->
+        <!-- <div class="col-75" *ngIf="showrootcouse">
+      <input type="text" class="marginhe bor" id="fname" name="firstname" readonly value="{{rootcouse}}">
+
+      </div> -->
+        <div class="col-75 inputExpand" *ngIf="showrootcouse">
+          <div class=" bor">
+            {{rootcouse}}
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-25">
+            <label for="fname" class="start marginty">Recommendation</label>
+          </div>
+        </div>
+        <!-- <p class="margintype bor" >{{Recommendation}}</p> -->
+        <div class="col-75 inputExpand ">
+          <div class=" bor">
+            {{Recommendation}}
+
+          </div>
+          <!-- <input type="text"  class="marginhe bor" id="fname" name="firstname" readonly value="{{Recommendation}}"> -->
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-25">
+            <label for="fname" class="h4 marginty">Description</label>
+          </div>
+        </div>
+        <!-- <p class="margintype">{{issuedescription}}</p> -->
+        <!-- <div class="col-75">
+      <input type="text" class="marginhe bor" id="fname" name="firstname" readonly value="{{issuedescription}}">
+
+      </div> -->
+        <div class="col-75 inputExpand ">
+          <div class=" bor">
+            {{issuedescription}}
+
+          </div>
+
+        </div>
+
+        <div class="row" *ngIf="showuseruseful">
+          <div class="col-25">
+            <label for="fname" class="start marginty">Implementation Outcome</label>
+          </div>
+        </div>
+
+        <div class="col-75 inputExpand" *ngIf="showuseruseful">
+          <div class=" bor">
+            {{useruseful}}
+
+          </div>
+
+        </div>
+        <div class="row" *ngIf="showattachment">
+          <div class="col-25">
+            <label for="fname" class="h4 fon">Attachment</label>
+          </div>
+        </div>
+        <p class="marginhe bor"><a [href]="attUrl" target="_blank" rel="noopener noreferrer" *ngIf="showattachment"
+            download>{{attOriginalName}}({{fileExtension}})</a></p>
+        <div class="row" style="margin-left: 75%;">
+          <p class="float-right" style="margin-right: 1%;">Did you find this lesson helpful?</p>
+          <i (click)="adduserlikes(UserID,LessonID,Likes);" style="font-size:20px;color:#0f69c4;">
+            <button (click)="enableDisableRule($event)" [ngClass]="{'black' : toggle, 'blue': !toggle}"
+              class="fa fa-thumbs-up mar float-right cus focus">
+            </button></i>
+          <div>
+            <p id="IDLESSON3" style="margin-left: 0%;" *ngIf="!showuseruseful && show">Was this lesson implemented?</p>
+          </div>
+          <a class="" onclick="document.getElementById('id01').style.display='block'"
+            style="border-radius: 4px; cursor: pointer; margin-left: 2%; height: 10%; color:#20a8d8;" id="IDLESSON"
+            *ngIf="!showuseruseful && show">Yes</a>
+          <a class="" (click)="adduserusefullessonforNo(LessonID,UserID,data,titleInput.value)"
+            style="border-radius: 4px;margin-left: 3px; cursor: pointer; height: 10%; color: #20a8d8;" id="IDLESSON1"
+            *ngIf="!showuseruseful && show">/ No</a>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <input style="display:none;" type="text" name="otherAnswer"id="myDIV"/>
+  <button type="button" (click)="myClickFunction($event)"class="deletebtn btn btn-danger float-right"
+  style="border-radius: 4px; "> Yes</button>
+  <button type="button" class="deletebtn btn btn-danger float-right"
+  style="border-radius: 4px; "> No</button> -->
+<div bsModal id="id01" class="modal">
+  <form class="modal-content" style="width: 33%; height: 35%; left: 36%;">
+    <div class="container">
+      <h3 style="text-align: center; margin-top:7%">Implementation Outcome</h3>
+      <textarea #titleInput type="text" name="otherAnswer" id="myDIV" style=" margin-left: 2%;resize: none;" max
+        (keyup)="sendit($event.target.value)"></textarea>
+      <div class="clearfix">
+        <br>
+        <br>
+        <!-- <button type="button" (click)="myClickFunction($event)" class="deletebtn btn btn-danger float-right"
+                style="border-radius: 4px; "> Yes</button> -->
+        <button type="button" onclick="document.getElementById('id01').style.display='none'"
+          style="border-radius: 4px;margin-left: 10px" class="cancelbtn btn btn-primary float-right">Cancel</button>
+        <button type="button" (click)="adduserusefullesson(LessonID,UserID,data,titleInput.value)"
+          style="border-radius: 4px;" class="btn btn-primary float-right removecss" id="iditem">Submit</button>
+
+
+      </div>
+    </div>
+  </form>
+</div>

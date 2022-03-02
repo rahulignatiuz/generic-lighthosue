@@ -1,0 +1,450 @@
+<!-- <div class="animated fadeIn">
+    <div class="card-columns cols-2">     
+      <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px; margin-left: 15%;">
+        <div class="card-header">
+          Lessons by Milestone       
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="PhasepieChartData && PhasepieChartData.length > 0">
+            <canvas baseChart class="chart"
+            [data]="PhasepieChartData"
+            [labels]="PhasepieChartLabels"
+            [chartType]="PhasepieChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>    
+      
+      <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px; margin-left: 15%;">
+        <div class="card-header">
+          Lessons by project phase        
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="projpieChartData && projpieChartData.length > 0">
+            <canvas baseChart class="chart"
+            [data]="projpieChartData"
+            [labels]="projpieChartLabels"
+            [chartType]="projpieChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card-header">
+          Lessons by category        
+        </div>
+        <div class="card-body" >
+          <div class="chart-wrapper" *ngIf="catpieChartData && catpieChartData.length > 0">
+            <canvas baseChart class="chart"
+            [data]="catpieChartData"
+            [labels]="catpieChartLabels"
+            [chartType]="catpieChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div> 
+      
+      <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card-header">
+          Lessons by impact level        
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="levelpieChartData && levelpieChartData.length > 0">
+            <canvas baseChart class="chart"
+            [data]="levelpieChartData"
+            [labels]="levelpieChartLabels"
+            [chartType]="levelpieChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>       
+    </div>
+  </div> -->
+  <div class="row">
+ 
+
+ 
+    <div class="col-sm-8 centerline">
+      <div class="card">
+       <div class="card-header">
+         <!-- <p style="float:left;"> -->
+         Lessons by Impact Level
+         <!-- </p>       -->
+       </div>
+       <div class="card-body">
+         <!-- This is some text within a card block. -->
+       </div>
+       <div class="row" style="width: 100%; margin-top: 3%;">
+     
+          <!-- <div class="column  col-sm-6 col-md-4">
+           <div class="card" style="background-color: #f64846;">
+             <i class="fa fa-warning"
+               style="font-size:25px;color: white;"></i>
+             <p style="margin-right: -60%; color: white; margin-top: -20%;"
+               *ngFor="let project of getallimpactlevelhigh">{{project.TotalNumber}}</p>
+  
+             <p class="sdata">High</p>
+           </div>
+         </div> -->
+  
+  
+         <div class="column  col-sm-6 col-md-4">
+          <div class="card" style="background-color: #f64846; height: 66%;     margin-bottom: 3.5rem;">
+            <!-- <h3 *ngFor="let project of getallimpactlevelhigh">{{project.TotalNumber}}</h3> -->
+            <i class="fa fa-warning fa-lg mt-4"
+              style="font-size:25px;color: white; margin-left: -77%;"></i>
+            <p style="margin-right: -60%; color: white; margin-top: -10%; "
+              *ngFor="let project of getallimpactlevelhigh">{{project.TotalNumber}}</p>
+  
+            <p class="sdata">High</p>
+          </div>
+        </div>
+  
+         <div class="column  col-sm-6 col-md-4">
+           <div class="card" style="background-color: #f69114; height: 66%;     margin-bottom: 3.5rem;">
+             <!-- <h3 *ngFor="let project of getallimpactlevelhigh">{{project.TotalNumber}}</h3> -->
+             <i class="fa fa-exclamation-circle fa-lg mt-4"
+               style="font-size:25px;color: white;     margin-left: -77%;"></i>
+             <p style="margin-right: -60%; color: white; margin-top: -10%;"
+               *ngFor="let project of getallimpactlevelmedium">{{project.TotalNumber}}</p>
+  
+             <p class="sdata">Medium</p>
+           </div>
+         </div>
+         <div class="column  col-sm-6 col-md-4">
+           <div class="card" style="background-color:#268001;height: 66%;     margin-bottom: 3.5rem;">
+             <!-- <h3 *ngFor="let project of getallimpactlevelhigh">{{project.TotalNumber}}</h3> -->
+             <i class="fa fa-exclamation fa-lg mt-4"
+               style="font-size:25px;color: white;     margin-left: -77%;"></i>
+             <p style="margin-right: -60%; color: white; margin-top: -10%;" *ngFor="let project of getallimpactlevellow">
+               {{project.TotalNumber}}</p>
+  
+             <p class="sdata">Low</p>
+           </div>
+         </div>
+  
+  
+       </div>
+  
+       <!-- <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px; margin-left: 15%;">
+       <div class="card-header">
+         Lessons by Milestone       
+       </div>
+       <div class="card-body">
+         <div class="chart-wrapper" *ngIf="PhasepieChartData && PhasepieChartData.length > 0">
+           <canvas baseChart class="chart"
+           [data]="PhasepieChartData"
+           [labels]="PhasepieChartLabels"
+           [chartType]="PhasepieChartType"
+           (chartHover)="chartHovered($event)"
+           (chartClick)="chartClicked($event)"></canvas>
+         </div>
+       </div>
+     </div>     -->
+       <!--     
+     <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px; margin-left: 15%;">
+       <div class="card-header">
+         Lessons by project phase        
+       </div>
+       <div class="card-body">
+         <div class="chart-wrapper" *ngIf="projpieChartData && projpieChartData.length > 0">
+           <canvas baseChart class="chart"
+           [data]="projpieChartData"
+           [labels]="projpieChartLabels"
+           [chartType]="projpieChartType"
+           (chartHover)="chartHovered($event)"
+           (chartClick)="chartClicked($event)"></canvas>
+         </div>
+       </div>
+     </div> -->
+  
+       <!-- <div class="card card col-lg-10" style="padding-left: 0px; padding-right: 0px;">
+       <div class="card-header">
+         Lessons by category        
+       </div>
+       <div class="card-body" >
+         <div class="chart-wrapper" *ngIf="catpieChartData && catpieChartData.length > 0">
+           <canvas baseChart class="chart"
+           [data]="catpieChartData"
+           [labels]="catpieChartLabels"
+           [chartType]="catpieChartType"
+           (chartHover)="chartHovered($event)"
+           (chartClick)="chartClicked($event)"></canvas>
+         </div>
+       </div>
+     </div>  -->
+  
+  
+     </div>
+    </div>
+    
+    <div class="col-sm-4 rightmargin paddingright">
+      <div class="card">
+        <div class="card-header">
+          Issue / Best Practice
+          <!-- <span style="margin-left: 39%;"> Best Practice</span> -->
+        </div>
+        <div class="card-body">
+          <!-- <circle-progress [percent]="currentValue4" [radius]="100" [space]="-20" [unitsFontSize]="25" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" [clockwise]="false" outerStrokeColor="#f64846"
+            outerStrokeColor="#f64846" outerStrokeGradientStopColor="#f64846"></circle-progress> -->
+  
+            <!-- <circle-progress [percent]="currentValue4" [radius]="60" [space]="-20" [unitsFontSize]="12" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="10" subtitleFontSize="23" subtitleColor="black" backgroundPadding="-14" outerStrokeWidth="21" titleFontSize="20" innerStrokeWidth="19" [clockwise]="false" outerStrokeColor="#f64846"
+            outerStrokeColor="#f64846" outerStrokeGradientStopColor="#f64846"></circle-progress> -->
+  
+            <circle-progress [percent]="currentValue4" [radius]="60" [space]="-20" subtitleFontSize="12" [unitsFontSize]="12" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" [clockwise]="false" outerStrokeColor="#f64846"
+            outerStrokeColor="#f64846" outerStrokeGradientStopColor="#f64846"  titleFontSize="24" subtitle= "Issue"></circle-progress>
+          <!-- <circle-progress [percent]="currentValue5" [radius]="100" [space]="-20" [unitsFontSize]="25" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" outerStrokeColor="#f64846" outerStrokeColor="#f64846"
+            outerStrokeGradientStopColor="#f64846"></circle-progress> -->
+        </div>
+        <label style="color: #f1f1f1; margin-bottom: 1%;" class="labelsforsmall">Issue </label>
+      </div>
+    </div>
+  
+  </div>
+  
+  <div class="row">
+    <!-- <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Lessons by function
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="funpieChartData && funpieChartData.length > 0">
+            <canvas baseChart class="chart" [data]="funpieChartData" [labels]="funpieChartLabels"
+              [chartType]="funpieChartType" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <div class="col-sm-8 centerline">
+      <div class="card">
+        <div class="card-header">
+          Lessons by Department
+          <span class="tooltip-toggle"
+          aria-label="Showing only those departments which have data."
+          tabindex="0">
+          <svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" class="svgmargin">
+             <g fill="blue" fill-rule="evenodd">
+                <path
+                   d="M13.5 27C20.956 27 27 20.956 27 13.5S20.956 0 13.5 0 0 6.044 0 13.5 6.044 27 13.5 27zm0-2C7.15 25 2 19.85 2 13.5S7.15 2 13.5 2 25 7.15 25 13.5 19.85 25 13.5 25z" />
+                <path
+                   d="M12.05 7.64c0-.228.04-.423.12-.585.077-.163.185-.295.32-.397.138-.102.298-.177.48-.227.184-.048.383-.073.598-.073.203 0 .398.025.584.074.186.05.35.126.488.228.14.102.252.234.336.397.084.162.127.357.127.584 0 .22-.043.412-.127.574-.084.163-.196.297-.336.4-.14.106-.302.185-.488.237-.186.053-.38.08-.584.08-.215 0-.414-.027-.597-.08-.182-.05-.342-.13-.48-.235-.135-.104-.243-.238-.32-.4-.08-.163-.12-.355-.12-.576zm-1.02 11.517c.134 0 .275-.013.424-.04.148-.025.284-.08.41-.16.124-.082.23-.198.313-.35.085-.15.127-.354.127-.61v-5.423c0-.238-.042-.43-.127-.57-.084-.144-.19-.254-.318-.332-.13-.08-.267-.13-.415-.153-.148-.024-.286-.036-.414-.036h-.21v-.95h4.195v7.463c0 .256.043.46.127.61.084.152.19.268.314.35.125.08.263.135.414.16.15.027.29.04.418.04h.21v.95H10.82v-.95h.21z" />
+             </g>
+          </svg>
+       </span>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="barChartDatafordepartment && barChartDatafordepartment.length > 0">
+            <canvas baseChart class="chart smallscreen" [data]="barChartDatafordepartment" [labels]="barChartLabelsfordepartment"
+              [colors]="lineChartColours" [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartTypefordepartment" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 rightmargin paddingright">
+      <div class="card">
+        <div class="card-header">
+          Lesson by Months
+        </div>
+        <ejs-accumulationchart id="chart-container" class="abc cssforsmallscreen" [legendSettings]='trianglelegent' 
+          [tooltip]='Triangulartooltipsettings' [background]='background'>
+          <e-accumulation-series-collection>
+            <e-accumulation-series type='Pyramid' [dataSource]='piedata' xName='x' yName='y'
+              [dataLabel]='trianglechartlabel' [palettes]='palette'>
+            </e-accumulation-series>
+          </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+        <br class="cssforsmal">
+        <br class="cssforsmal">
+        <br class="cssforsmal">
+        <!-- <label >pyramid</label> -->
+      </div>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-sm-4 centerline">
+      <div class="card">
+        <div class="card-header">
+          Lessons by Projects
+          <select  [(ngModel)]='nrSelect' class="form-control col-sm-3 float-right" style="background-color: #f1f1f1; margin-top: -9px;"
+          (change)="onselectProjecttype3($event)" id="458">
+          <option value="" disabled> Select Type</option>
+          <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+            {{projectype.Name}}</option>
+        </select>
+        </div>
+        <!-- <select class="form-control col-sm-3" style=" margin-top: 6px;  margin-left: 1%;background-color: #f1f1f1;"
+          (change)="onselectProjecttype3($event)" id="458">
+          <option value="" disabled> Select Type</option>
+          <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+            {{projectype.Name}}</option>
+        </select> -->
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="projectpieChartData && projectpieChartData.length > 0">
+            <canvas baseChart class="chart marginforsmall" [data]="projectpieChartData" [labels]="projectpieChartLabels"
+              [chartType]="projectpieChartType" (chartHover)="chartHovered($event)" [colors]="chartColors"
+              (chartClick)="chartClicked($event)" ></canvas>
+          </div>
+          <br class="largescreen">
+          <br class="largescreen">
+        
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="col-sm-4 centerlineright paddingright">
+      <div class="card ">
+        <div class="card-header ">
+          Projects / Process
+  
+          <!-- <span style="margin-left: 32%;"> Process</span> -->
+        </div>
+        <div class="card-body marginforlarger">
+          <circle-progress [percent]="currentValue2" [radius]="80" [space]="-20" subtitleFontSize="12" [unitsFontSize]="12" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" [clockwise]="false" outerStrokeColor="#4882c2"
+            outerStrokeColor="#4882c2" outerStrokeGradientStopColor="#4882c2"  titleFontSize="24" subtitle= "Projects"></circle-progress>
+  <!-- 
+          <circle-progress [percent]="currentValue3" [radius]="100" [space]="-20" [unitsFontSize]="25" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" outerStrokeColor="#4882c2" outerStrokeColor="#4882c2"
+            outerStrokeGradientStopColor="#4882c2" subtitle="Projects"></circle-progress> -->
+        </div>
+        <!-- <label>Projects </label> -->
+        <p style="color: #f1f1f1;">Projects</p>
+  
+      </div>
+    </div>
+    <div class="col-sm-4 centerlineright paddingright">
+      <div class="card">
+        <div class="card-header">
+          Project Phase 
+        </div>
+        <select  [(ngModel)]='nrSelect' class="form-control col-sm-3 projectphaseselect" style=" margin-top: -9%;  margin-left: 75%;    margin-bottom: 5%;background-color: #f1f1f1;"
+          (change)="onselectProjecttype2($event)" id="458">
+          <option value="" disabled> Select Type</option>
+          <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+            {{projectype.Name}}</option>
+        </select>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="barChartData && barChartData.length > 0">
+            <canvas baseChart class="chart smallscreenprojectphase" [data]="barChartData" [labels]="barChartLabels" [colors]="lineChartColours"
+              [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartTypeforphase"
+              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              
+              <!-- <canvas baseChart class="chart" [data]="barChartData"  [colors]="lineChartColours" [chartType]="barChartTypeforphase"
+              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas> -->
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4 centerline">
+      <div class="card">
+        <div class="card-header">
+          Implemented / Not Implemented
+  
+          <!-- <span style="margin-left: 32%;"> Process</span> -->
+        </div>
+        <div class="card-body largescreenimplemented">
+          <circle-progress [percent]="currentValue" [radius]="80" [space]="-20" subtitleFontSize="12" [unitsFontSize]="12" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" [clockwise]="false" 
+              titleFontSize="24" subtitle= "Implemented"></circle-progress>
+  <!-- 
+          <circle-progress [percent]="currentValue3" [radius]="100" [space]="-20" [unitsFontSize]="25" [animation]="true"
+            [animationDuration]="1300" [backgroundStrokeWidth]="38" outerStrokeColor="#4882c2" outerStrokeColor="#4882c2"
+            outerStrokeGradientStopColor="#4882c2" subtitle="Projects"></circle-progress> -->
+        </div>
+        <label style="color: #f1f1f1;">Implemented </label>
+  
+      </div>
+    </div>
+  
+    <div class="col-sm-4 centerlineright paddingright">
+      <div class="card">
+        <div class="card-header">
+          Lessons by Impact Category 
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="barChartDataforcategory && barChartDataforcategory.length > 0">
+            <canvas baseChart class="chart impactcssforsmallscreen" [data]="barChartDataforcategory" [labels]="barChartLabelsforcategory" style="margin-top: 13px;"
+              [colors]="chartColors1" [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartTypeforcategory" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+              <!-- <canvas baseChart class="chart" [data]="barChartDataforcategory" [labels]="barChartLabelsforcategory"
+              [chartType]="barChartTypeforcategory" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas> -->
+              
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 centerlineright paddingright">
+      <div class="card">
+        <div class="card-header">
+          Lessons by Milestones
+        </div>
+        <select  [(ngModel)]='nrSelect' class="form-control col-sm-3 projectphaseselect" style=" margin-top: -9%;  margin-left: 75%;    margin-bottom: 5%;background-color: #f1f1f1;"
+          (change)="onselectProjecttype1($event)" id="458">
+          <option value="" disabled> Select Type</option>
+          <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+            {{projectype.Name}}
+          </option>
+        </select>
+        <div class="card-body">
+          <div class="chart-wrapper" *ngIf="milespieChartData && milespieChartData.length > 0">
+            <!-- <canvas baseChart class="chart" [data]="milespieChartData" [labels]="milespieChartLabels"
+              [chartType]="milespieChartType" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas> -->
+  
+              <canvas baseChart class="chart Milestonecssforsmall" [data]="milespieChartData" [labels]="milespieChartLabels" [colors]="lineChartColours"
+              [options]="barChartOptions" [legend]="barChartLegend" [chartType]="milespieChartType"
+              (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8" style="padding: 0;">
+    <div class="card">
+      <div class="card-header">
+        Lessons by Function
+        <span class="tooltip-toggle"
+        aria-label="Showing only those functions which have data."
+        tabindex="0">
+        <svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg" class="svgmargin">
+           <g fill="blue" fill-rule="evenodd">
+              <path
+                 d="M13.5 27C20.956 27 27 20.956 27 13.5S20.956 0 13.5 0 0 6.044 0 13.5 6.044 27 13.5 27zm0-2C7.15 25 2 19.85 2 13.5S7.15 2 13.5 2 25 7.15 25 13.5 19.85 25 13.5 25z" />
+              <path
+                 d="M12.05 7.64c0-.228.04-.423.12-.585.077-.163.185-.295.32-.397.138-.102.298-.177.48-.227.184-.048.383-.073.598-.073.203 0 .398.025.584.074.186.05.35.126.488.228.14.102.252.234.336.397.084.162.127.357.127.584 0 .22-.043.412-.127.574-.084.163-.196.297-.336.4-.14.106-.302.185-.488.237-.186.053-.38.08-.584.08-.215 0-.414-.027-.597-.08-.182-.05-.342-.13-.48-.235-.135-.104-.243-.238-.32-.4-.08-.163-.12-.355-.12-.576zm-1.02 11.517c.134 0 .275-.013.424-.04.148-.025.284-.08.41-.16.124-.082.23-.198.313-.35.085-.15.127-.354.127-.61v-5.423c0-.238-.042-.43-.127-.57-.084-.144-.19-.254-.318-.332-.13-.08-.267-.13-.415-.153-.148-.024-.286-.036-.414-.036h-.21v-.95h4.195v7.463c0 .256.043.46.127.61.084.152.19.268.314.35.125.08.263.135.414.16.15.027.29.04.418.04h.21v.95H10.82v-.95h.21z" />
+           </g>
+        </svg>
+     </span>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrapper" *ngIf="funpieChartData && funpieChartData.length > 0">
+          <canvas baseChart class="chart" [data]="funpieChartData" [labels]="funpieChartLabels" [colors]="lineChartColours"
+          [options]="barChartOptions" [legend]="barChartLegend" [chartType]="funpieChartType"
+          (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,46 @@
+<div *ngIf="verifyEmail" class="loader">Loading...</div>
+
+<div *ngIf="isError" class="row bg-white">
+    <div class="col-md-5">
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="error-items">
+                    <h1 class="access-forbidden">Access Forbidden</h1>
+                    <h3 *ngIf="outerEmail" class="access-message">You do not have permission to access this page.</h3>
+                    <h3 *ngIf="isEmailRequestPending" class="access-message">
+                        Sorry, your access is refused due to your request already pending.
+                    </h3>
+                    <h3 *ngIf="isEmailInactive" class="access-message">
+                        <p>Sorry, your account is Inactive Please contact your Administer</p>
+                    </h3>
+                    <h3 *ngIf="emailNotExist" class="access-message">
+                        <p>You do not have permission to access this account.</p>
+                        <p>Please contact to your administrator.</p>
+                    </h3>
+                    <div class="row">
+                        <button type="button" (click)="gotoLogin()"
+                            class="btn  btn-lg btn-primary rounded-pill go-back-login-btn">Go back
+                            login</button>
+                        <!-- <button type="button" *ngIf="emailNotExist" (click)="sendLoginReq()"
+                            class="btn  btn-lg btn-primary rounded-pill go-back-login-btn">Request Access</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <img src="assets/img/Access-denied.png" class="float-right img403" alt="">
+    </div>
+</div>
+<!-- <div bsModal #sendRequest="bs-modal" class="modal" data-backdrop="static">
+    <form class="modal-content row forms">
+        <div class="modal-body">
+            <p>Your request to access the site has been submitted to the administrator.</p>
+            <p>You will receive an email when your request is approved.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="sendDone()" class="btn btn-primary">OK</button>
+        </div>
+    </form>
+</div> -->

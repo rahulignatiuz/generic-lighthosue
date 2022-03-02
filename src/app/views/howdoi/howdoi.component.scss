@@ -1,0 +1,83 @@
+
+  .table-title{
+    color: rgb(17, 3, 3);
+    background:#f0f3f5;
+    padding: 15px;
+  }
+  .table-title .btn {
+    color:white;
+    float: right;
+    font-size: 13px;
+    background: #20a8d8;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 20px;
+  
+  }
+  .table-title .btn i{
+  
+    font-size: 16px;
+  }
+.card-header{
+  color: white;
+    font-weight: normal;
+    background: #9ea0a1;
+}
+.pdf{
+
+    color:rgb(4, 65, 233);
+    text-decoration:#20a8d8 ;
+    background-color: transparent;
+
+}
+a:hover {
+  //  color: #000108;
+ // color: #20a8d8;
+ color: rgb(4, 65, 233);
+}
+// a:active {
+//   text-decoration: underline;
+  
+// }
+
+
+@media (max-width: 2000px ){
+
+  .forlargescreen{
+    margin-left: 30%;
+  }
+  .forlargescreenmasterlist{
+    margin-left:40% ;
+  }
+  .forlargescreenfilter{
+    margin-left:53% ;
+  }
+  .forlargescreenlesson{
+    margin-left:46% ;
+  }
+  .forlargescreenuser{
+    margin-left:22% ;
+  }
+}
+
+@media (max-width: 1800px ){
+
+  .forsmallscreen{
+    margin-left: 11%;
+  }
+  .forsmallscreenmasterlist{
+    margin-left:21% ;
+  }
+  .forsmallscreenfilter{
+    margin-left:40% ;
+  }
+  .forsmallscreenlesson{
+    margin-left:34% ;
+  }
+  .forsmallscreenuser{
+    margin-left:-1% ;
+  }
+}

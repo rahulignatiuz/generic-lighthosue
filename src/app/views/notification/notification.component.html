@@ -1,0 +1,463 @@
+<div class="alert alert-success alert-dismissible" *ngIf="isSuccessAddNotification">
+    <a href="#"  class="close" (click)="closeSuccessPop()" data-dismiss="alert" aria-label="close">&times;</a>
+    You have successfully signed up for notifications. You can logon to the same page to modify the notification.
+ </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row user-header">
+                    <div class="col-sm-6">
+                        <!-- <h4 style="font-weight: 500;">Notification </h4> -->
+                        <span class="centerposition">
+                            Notification
+                
+                           </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#" (click)="addNotificationBtn()" class="btn btn-secondary"><i
+                                class="icon-bell fa-fw"></i><span>Add
+                                Notification</span></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover shadow-lg bg-white">
+                <thead>
+                    <tr>
+                        <th>Project Type</th>
+                        <th>Project Name </th>
+                        <th>Process Name</th>
+                        <th>Project Phase</th>
+                        <th>Milestone</th>
+                        <th>Lifecycle</th>
+                        <th>Function</th>
+                        <th>Department</th>
+                        <th>Impact Category</th>
+                        <th>Impact Level</th>
+                        <th>Frequency</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let notifications of allNotification | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <td>{{notifications.ProjectType}}</td>
+                        <td>{{notifications.ProjectName}}</td>
+                        <td>{{notifications.ProcessName}}</td>
+                        <td>{{notifications.Phase}}</td>
+                        <td>{{notifications.Milestone}}</td>
+                        <td>{{notifications.LifeCycle}}</td>
+                        <td>{{notifications.Functions}}</td>
+                        <td>{{notifications.Department}}</td>
+                        <td>{{notifications.ImpactCategory}}</td>
+                        <td>{{notifications.ImpactLevel}}</td>
+                        <td>{{notifications.Frequency}}</td>
+                        <td>
+                            <a href="#" (click)="notificationEdit(notifications)" class="edit" title=""
+                                data-toggle="tooltip" data-original-title="edit"><i class="fa fa-edit icon fa-fw"
+                                    aria-hidden="true"></i></a>
+                            <a href="#" (click)=notificationDelete(notifications.ID) class="delete" title=""
+                                data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-remove icon"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<div bsModal #notificationModal="bs-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Notification</h5>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="notificationType" value="Project"
+                            [(ngModel)]="notificationType" (change)="notificationTypeChange($event, notificationType)"
+                            checked>
+                        <label class="form-check-label" for="inlineRadio1">Project</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="notificationType" value="Process"
+                            [(ngModel)]="notificationType" (change)="notificationTypeChange($event, notificationType)">
+                        <label class="form-check-label" for="inlineRadio2">Process</label>
+                    </div>
+                </div>
+            </div>
+            <form class="modal-body" id="notificationForm" [formGroup]="notificationForm"
+                (ngSubmit)="addNotification()">
+                <h4> <span class="label label-default">Condition</span></h4>
+                <div class="row">
+                    <div class="col-sm-4" *ngIf="ifSelectProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <select class="form-control" [(ngModel)]="projectType"
+                                    (change)="onselectProjecttype($event)" formControlName="projectType">
+                                    <option value="0" disabled> Select Project Type</option>
+                                    <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+                                        {{projectype.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf="ifSelectProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="projectname" formControlName="projectname">
+                                    <option value="0" disabled>Project Name</option>
+                                    <option *ngFor="let pname of mappingProjectTypeAndProject" value="{{pname.ID}}">
+                                        {{pname.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf="ifSelectProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="projectPhase" formControlName="projectPhase">
+                                    <option value="0" disabled>Select Phase</option>
+                                    <option *ngFor="let phase of MappingProjectTypeAndPhase" value="{{phase.ID}}">
+                                        {{phase.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" *ngIf="!ifSelectProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" formControlName="process" [(ngModel)]="process">
+                                    <option value="0" disabled>Process Name</option>
+                                    <option *ngFor="let process of processAsObjects" value="{{process.ID}}">
+                                        {{process.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf="ifSelectProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="projectphasemilestone"
+                                    formControlName="projectphasemilestone">
+                                    <option value="0" disabled>Select Milestone</option>
+                                    <option *ngFor="let milestone of mappingProjectAndMilestone"
+                                        value="{{milestone.ID}}">
+                                        {{milestone.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="lifecycle" formControlName="lifecycle">
+                                    <option value="0" disabled>Select Lifecycle</option>
+                                    <option *ngFor="let lifecycle of lifecycleAsObjects" value="{{lifecycle.ID}}">
+                                        {{lifecycle.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="function" formControlName="function">
+                                    <option value="0" disabled>Select Function</option>
+                                    <option *ngFor="let functions of functionAsObjects" value="{{functions.ID}}">
+                                        {{functions.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <select class="form-control" [(ngModel)]="department" formControlName="department">
+                                    <option value="0" disabled>Select Department</option>
+                                    <option *ngFor="let departments of departmentAsObjects" value="{{departments.ID}} ">
+                                        {{departments.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="impectcategory"
+                                    formControlName="impectcategory">
+                                    <option value="0" disabled>Select Impact Category</option>
+                                    <option *ngFor="let category of categoriesAsObjects" value="{{category.ID}}">
+                                        {{category.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="impectlevel" formControlName="impectlevel">
+                                    <option value="0" disabled>Select Impact Level</option>
+                                    <option *ngFor="let impectlevel of impactlevelAsObjects" value="{{impectlevel.ID}}">
+                                        {{impectlevel.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4> <span class="label label-default">Where to send it</span></h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="email" class="form-control" [(ngModel)]="email" formControlName="email"
+                                placeholder="Email" autocomplete="email" disabled>
+                        </div>
+                    </div>
+                </div>
+                <h4> <span class="label label-default">Frequency</span></h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control"
+                                    [ngClass]="{'has-error is-invalid': (isSubmitted || notificationForm.controls['frequency'].touched) && notificationFormControls.frequency.errors }"
+                                    [(ngModel)]="frequency" formControlName="frequency">
+                                    <option value="null" disabled>Select Frequency</option>
+                                    <option *ngFor="let frequencies of getAllFrequency" value="{{frequencies.ID}}">
+                                        {{frequencies.Name}}</option>
+                                </select>
+                                <div *ngIf="notificationForm.controls['frequency'].invalid && (isSubmitted || notificationForm.controls['frequency'].dirty || notificationForm.controls['frequency'].touched)"
+                                    class="text-danger">
+                                    <div *ngIf="notificationForm.controls['frequency'].errors.required">
+                                        Please select the Frequency.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" (click)="hideNotificationModul()"
+                    class="btn btn-lg bg-white nohover">Cancel</button>
+                <button type="submit" form="notificationForm" class="btn btn-primary btn-lg">Save Alert</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #notificationEditModal="bs-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Notification</h5>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="notificationEditType" value="Project"
+                            [(ngModel)]="notificationEditType"
+                            (change)="notificationEditTypeChange($event, notificationEditType)" checked>
+                        <label class="form-check-label" for="inlineRadio1">Project</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="notificationEditType" value="Process"
+                            [(ngModel)]="notificationEditType"
+                            (change)="notificationEditTypeChange($event, notificationEditType)">
+                        <label class="form-check-label" for="inlineRadio2">Process</label>
+                    </div>
+                </div>
+            </div>
+            <form class="modal-body" id="notificationEditForm" [formGroup]="notificationEditForm"
+                (ngSubmit)="editNotification()">
+                <h4> <span class="label label-default">Condition</span></h4>
+                
+                <div class="row">
+                    <div class="col-sm-4" *ngIf="ifSelectEditProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <select class="form-control" [(ngModel)]="projectTypeEdit"
+                                    (change)="onselectEditProjecttype($event)" formControlName="projectTypeEdit">
+                                    <option value="0"> Select Project Type</option>
+                                    <option *ngFor="let projectype of projectsAsType" value="{{projectype.ID}}">
+                                        {{projectype.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf="ifSelectEditProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="projectnameEdit"
+                                    formControlName="projectnameEdit">
+                                    <option value="0">Project Name</option>
+                                    <option *ngFor="let pname of mappingProjectTypeAndProject" value="{{pname.ID}}">
+                                        {{pname.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row" *ngIf="ifSelectEditProject">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="projectPhaseEdit"
+                                    formControlName="projectPhaseEdit">
+                                    <option value="0">Select Phase</option>
+                                    <option *ngFor="let phase of MappingProjectTypeAndPhase" value="{{phase.ID}}">
+                                        {{phase.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" *ngIf="!ifSelectEditProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" formControlName="processEdit" [(ngModel)]="processEdit">
+                                    <option value="0" disabled>Process Name</option>
+                                    <option *ngFor="let process of processAsObjects" value="{{process.ID}}">
+                                        {{process.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" *ngIf="ifSelectEditProject">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <select class="form-control" [(ngModel)]="projectphasemilestoneEdit"
+                                    formControlName="projectphasemilestoneEdit">
+                                    <option value="0">Select Milestone</option>
+                                    <option *ngFor="let milestone of mappingProjectAndMilestone"
+                                        value="{{milestone.ID}}">
+                                        {{milestone.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="lifecycleEdit"
+                                    formControlName="lifecycleEdit">
+                                    <option value="0">Select Lifecycle</option>
+                                    <option *ngFor="let lifecycle of lifecycleAsObjects" value="{{lifecycle.ID}}">
+                                        {{lifecycle.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="functionEdit" formControlName="functionEdit">
+                                    <option value="0">Select Function</option>
+                                    <option *ngFor="let functions of functionAsObjects" value="{{functions.ID}}">
+                                        {{functions.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <select class="form-control" [(ngModel)]="departmentEdit"
+                                    formControlName="departmentEdit">
+                                    <option value="0">Select Department</option>
+                                    <option *ngFor="let departments of departmentAsObjects" [value]="departments.ID">
+                                        {{departments.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="impectcategoryEdit"
+                                    formControlName="impectcategoryEdit">
+                                    <option value="0">Select Impact Category</option>
+                                    <option *ngFor="let category of categoriesAsObjects" value="{{category.ID}}">
+                                        {{category.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="impectlevelEdit"
+                                    formControlName="impectlevelEdit">
+                                    <option value="0">Select Impact Level</option>
+                                    <option *ngFor="let impectlevel of impactlevelAsObjects" value="{{impectlevel.ID}}">
+                                        {{impectlevel.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4> <span class="label label-default">Frequency</span></h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <select class="form-control" [(ngModel)]="frequencyEdit"
+                                    formControlName="frequencyEdit">
+                                    <option value="0" disabled>Select Frequency</option>
+                                    <option *ngFor="let frequencies of getAllFrequency" value="{{frequencies.ID}}">
+                                        {{frequencies.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" (click)="hideNotificationEditModul()"
+                    class="btn  btn-lg bg-white nohover">Cancel</button>
+                <button type="submit" form="notificationEditForm" class="btn btn-primary btn-lg">Save Alert</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div bsModal #deleteNotification="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+            </div>
+
+            <div class="modal-body">
+                <h3>Are you sure you want to delete this notification?</h3>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" (click)="deleteNtfClose()" class="btn btn-primary">Cancel <i class="fa fa-close">
+                    </i></button>
+                <button type="button" (click)="deleteNtfDone()" class="btn btn-danger">Delete <i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div bsModal #deleteNotification="bs-modal" class="modal">
+    <form class="modal-content row forms">
+      <div class="modal-body">
+        <h3>Are you sure you want to delete this notification?</h3>
+      </div>
+      <div class="modal-footer" style="border-top: 0px solid #c8ced3;">
+        <button type="button" (click)="deleteNtfClose()" class="btn btn-primary">Cancel <i class="fa fa-close"> </i></button>
+        <button type="button" (click)="deleteNtfDone()" class="btn btn-danger">Delete <i class="fa fa-trash"></i></button>
+      </div>
+    </form>
+  </div>

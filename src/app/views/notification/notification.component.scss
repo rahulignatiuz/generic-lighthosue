@@ -1,0 +1,61 @@
+td  {
+    text-align: left;
+  }
+  a.btn.btn-secondary{
+    float: right;
+  }
+  .table-title{
+    color: rgb(17, 3, 3);
+    background:#f0f3f5;
+    padding: 15px;
+  }
+  .table-title .btn {
+    color:white;
+    float: right;
+    font-size: 13px;
+    background: #20a8d8;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 20px;
+  
+  }
+  .table-title .btn i{
+  
+    font-size: 16px;
+  }
+  .icon{
+
+    font-size: 18px;
+  }
+  // .forms{
+  //   width: 50%;
+  //   height: auto;
+  //   left: 30%;
+  //   top: 15%;
+  //   padding: 15px;
+  // }
+  .nohover:hover{
+    cursor:default !important;
+  }
+  a.delete{
+
+    color:#ff0000
+  }
+  .modal.fade.bd-example-modal-lg{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  .forms{
+    width: 33%;
+    height: auto;
+    left: 36%;
+    top: 15%;
+    padding: 15px;
+  }
+  .centerposition{
+    position: absolute;
+    top: 4%
+}

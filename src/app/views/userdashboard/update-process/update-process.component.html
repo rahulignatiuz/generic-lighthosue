@@ -1,0 +1,704 @@
+<!--/.row-->
+<div class="row">
+   <!--/.row-->
+   <div class="col-lg-12">
+      <div class="card">
+         <div class="card-header">
+            <i class="fa fa-edit"></i>{{isupdate ? 'Edit a lesson ' : 'Edit a lesson '}}
+         </div>
+         <!-- <div class="card-header">
+            <input type="radio" id="project" name="lesson" value="project" [(ngModel)]="lf"
+               (change)="togglelessonFlow($event, lf)">
+            <label for="project" style="margin-left: 5px;">Project</label>
+            <input type="radio" style="margin-left: 20px;" id="Process" name="lesson" value="Process" [(ngModel)]="lf"
+               (change)="togglelessonFlow($event, lf)">
+            <label for="Process" style="margin-left: 5px;">Process</label><br>
+         </div> -->
+         <div class="card-body">
+
+            <form class="form-horizontal" [formGroup]="lessonProcessForm"
+               (ngSubmit)="updateLessonProcess(lessonProcessForm)" *ngIf="isProcess">
+               <div class="col-md-12 mb-4">
+                  <!-- Nav tabs -->
+                  <tabset>
+                     <tab heading="Process Details" [active]="projectTab" [disabled]="projectdTab">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Process <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectlevel" placeholder="Impact level" type="text"> -->
+                                    <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.process.errors }"
+                                       formControlName="process" id="process">
+                                       <option value="">Process Name</option>
+                                       <option *ngFor="let process of processAsObjects" value="{{process.ID}}">
+                                          {{process.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Lifecycle <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectcategory" placeholder="Impact category" type="text"> -->
+                                    <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.lifecycle.errors }"
+                                       [(ngModel)]="lifecycle" formControlName="lifecycle" id="icat">
+                                       <option value="" selected>Select Impact Category</option>
+                                       <option *ngFor="let lifecycle of lifecycleAsObjects" value="{{lifecycle.ID}}">
+                                          {{lifecycle.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Function <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectlevel" placeholder="Impact level" type="text"> -->
+                                    <!-- <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.function.errors }"
+                                       formControlName="function" id="function">
+                                       <option value="">Select Function</option>
+                                       <option *ngFor="let function of functionAsObjects" value="{{function.ID}}">
+                                          {{function.Name}}</option>
+                                    </select> -->
+                                    <ng-multiselect-dropdown style="display: block;    
+                                    color: #5c6873;
+                                    background-color: #fff;
+                                    background-image: none;
+                                    border: 1px solid #e4e7ea;
+                                    border-radius: 0px; " class="selectdiv" [placeholder]="'Select Functions'"
+                                       [data]="functionAsObjects" formControlName="function" [ngModel]="function"
+                                       [settings]="dropdownSettings">
+                                    </ng-multiselect-dropdown>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Department<span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectlevel" placeholder="Impact level" type="text"> -->
+                                    <!-- <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.department.errors }"
+                                       formControlName="department" id="department">
+                                       <option value="">Select Department</option>
+                                       <option *ngFor="let department of departmentAsObjects" value="{{department.ID}}">
+                                          {{department.Name}}</option>
+                                    </select> -->
+                                    <ng-multiselect-dropdown style="display: block;    
+                                    color: #5c6873;
+                                    background-color: #fff;
+                                    background-image: none;
+                                    border: 1px solid #e4e7ea;
+                                    border-radius: 0px; " class="selectdiv" [placeholder]="'Select Departments'"
+                                       [data]="departmentAsObjects" formControlName="department"
+                                       [settings]="dropdownSettings" [ngModel]="department">
+                                    </ng-multiselect-dropdown>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-actions col-sm-12 text-right">
+                              <button class="btn btn-primary borderbtn" type="button" (click)="tabChange(2)"
+                                 [disabled]="lessonProcessForm.controls[  'department' || 'function' || 'process'].invalid">Next
+                                 <i class="fa fa-angle-double-right"></i></button>
+                           </div>
+                        </div>
+                     </tab>
+                     <tab heading="Lesson Details" [active]="lessonTab" [disabled]="lessondTab">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="textarea-input">Title <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <input class="form-control" [(ngModel)]="title"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.title.errors }"
+                                       id="text-input" formControlName="title" placeholder="Title" type="text">
+                                    <div
+                                       *ngIf="lessonProcessForm.controls['title'].invalid && (lessonProcessForm.controls['title'].dirty || lessonProcessForm.controls['title'].touched)"
+                                       class="custom-errMsg">
+                                       <div *ngIf="lessonProcessForm.controls['title'].errors.required">
+                                          Title is required.
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="inline-radios">Type of Lesson </label>
+                                 <div class="col-md-9 col-form-label">
+                                    <select class="form-control" [(ngModel)]="typeoflesson"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.typeoflesson.errors }"
+                                       formControlName="typeoflesson" (change)="onselecttypeoflesson($event)"
+                                       id="toflesson">
+                                       <option value="" [selected]='true'>Select Type of Lesson</option>
+                                       <option value="1" selected>Issue</option>
+                                       <option value="2">Best Practice</option>
+                                    </select>
+                                    <div
+                                       *ngIf="lessonProcessForm.controls['typeoflesson'].invalid && (lessonProcessForm.controls['typeoflesson'].dirty || lessonProcessForm.controls['typeoflesson'].touched)"
+                                       class="custom-errMsg">
+                                       <div *ngIf="lessonProcessForm.controls['typeoflesson'].errors.required">
+                                          Type of lesson is required.
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div *ngIf="showIssues">
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="textarea-input">Description<span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <textarea class="form-control" (blur)="lessonFormFields()" id="textarea-input"
+                                          [(ngModel)]="issuedescription"
+                                          [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.issuedescription.errors }"
+                                          formControlName="issuedescription" placeholder="Description..." rows="6"
+                                          #description></textarea>
+                                       <label
+                                          class="float-left remaning">{{description.value.length}}/{{maxChars}}</label>
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['issuedescription'].invalid && (lessonProcessForm.controls['issuedescription'].dirty || lessonProcessForm.controls['issuedescription'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['issuedescription'].errors.required">
+                                             Description is required.
+                                          </div>
+
+                                          <div *ngIf="lessonProcessForm.controls['issuedescription'].errors.maxlength">
+                                             Maximum character is 250 !!!
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="textarea-input">Root Cause <span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <textarea class="form-control" (blur)="lessonFormFields()" id="textarea-input"
+                                          [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.rootcause.errors }"
+                                          [(ngModel)]="rootcause" formControlName="rootcause"
+                                          placeholder="Root cause..." rows="6" maxlength="250" #root></textarea>
+                                       <label class="float-left remaning">{{root.value.length}}/{{maxChars}}</label>
+
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['rootcause'].invalid && (lessonProcessForm.controls['rootcause'].dirty || lessonProcessForm.controls['rootcause'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['rootcause'].errors.required">
+                                             Root cause is required.
+                                          </div>
+                                       </div>
+
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="textarea-input">Recommendation <span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <textarea class="form-control" (blur)="lessonFormFields()" id="textarea-input"
+                                          [(ngModel)]="Recommendation"
+                                          [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.Recommendation.errors }"
+                                          formControlName="Recommendation" placeholder="Recommendation..." rows="6"
+                                          maxlength="250" #recommendation></textarea>
+                                       <label
+                                          class="float-left remaning">{{recommendation.value.length}}/{{maxChars}}</label>
+
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['Recommendation'].invalid && (lessonProcessForm.controls['Recommendation'].dirty || lessonProcessForm.controls['Recommendation'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['Recommendation'].errors.required">
+                                             Recommendation is required.
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Keywords<span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <tag-input [ngModel]="_Keywords" [theme]="'minimal'"
+                                          [separatorKeyCodes]="[186,59]" formControlName="_Keywords"
+                                          [placeholder]="'Select Keywords'" [secondaryPlaceholder]="'Select Keywords'"
+                                          [displayBy]="'Name'" (onAdd)="addIgnoreColumn($event)"
+                                          (onRemove)="onKeywordsRemoved($event)" theme='bootstrap'>
+                                          <tag-input-dropdown [autocompleteItems]="keywordsAsObjects"
+                                             [identifyBy]="'ID'" [displayBy]="'Name'">
+                                          </tag-input-dropdown>
+                                       </tag-input>
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['_Keywords'].invalid && (lessonProcessForm.controls['_Keywords'].dirty || lessonProcessForm.controls['_Keywords'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['_Keywords'].errors.required">
+                                             Please press "enter" key to capture new Keywords
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div *ngIf="showPractice">
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="textarea-input">Description <span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <textarea class="form-control" (blur)="lessonFormFields()" id="textarea-input"
+                                          [(ngModel)]="issuedescription"
+                                          [ngClass]="{'has-error is-invalid': isSubmitted && lessonProcessForm.issuedescription.errors }"
+                                          formControlName="issuedescription" placeholder="Description..." rows="6"
+                                          maxlength="250" #description></textarea>
+                                       <label
+                                          class="float-left remaning">{{description.value.length}}/{{maxChars}}</label>
+
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['issuedescription'].invalid && (lessonProcessForm.controls['issuedescription'].dirty || lessonProcessForm.controls['issuedescription'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['issuedescription'].errors.required">
+                                             Description is required.
+                                          </div>
+
+                                          <div *ngIf="lessonProcessForm.controls['issuedescription'].errors.maxlength">
+                                             Maximum character is 250 !!!
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="textarea-input">Recommendation <span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <textarea class="form-control" (blur)="lessonFormFields()" id="textarea-input"
+                                          [(ngModel)]="Recommendation"
+                                          [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.Recommendation.errors }"
+                                          formControlName="Recommendation" placeholder="Recommendation..." rows="6"
+                                          maxlength="250" #recommendation></textarea>
+                                       <label
+                                          class="float-left remaning">{{recommendation.value.length}}/{{maxChars}}</label>
+
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['Recommendation'].invalid && (lessonProcessForm.controls['Recommendation'].dirty || lessonProcessForm.controls['Recommendation'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['Recommendation'].errors.required">
+                                             Recommendation is required.
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="text-input">Keywords<span
+                                          class="danger">*</span></label>
+                                    <div class="col-md-9">
+                                       <tag-input [ngModel]="_Keywords" [theme]="'minimal'"
+                                          [separatorKeyCodes]="[186,59]" formControlName="_Keywords"
+                                          [placeholder]="'Select Keywords'" [secondaryPlaceholder]="'Select Keywords'"
+                                          [displayBy]="'Name'" (onAdd)="addIgnoreColumn($event)"
+                                          (onRemove)="onKeywordsRemoved($event)" theme='bootstrap'>
+                                          <tag-input-dropdown [autocompleteItems]="keywordsAsObjects"
+                                             [identifyBy]="'ID'" [displayBy]="'Name'">
+                                          </tag-input-dropdown>
+                                       </tag-input>
+                                       <div
+                                          *ngIf="lessonProcessForm.controls['_Keywords'].invalid && (lessonProcessForm.controls['_Keywords'].dirty || lessonProcessForm.controls['_Keywords'].touched)"
+                                          class="custom-errMsg">
+                                          <div *ngIf="lessonProcessForm.controls['_Keywords'].errors.required">
+                                             Please press "enter" key to capture new Keywords
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-actions col-sm-12 text-right">
+                           <button class="btn btn-secondary borderbtn" type="button" (click)="tabChange(1)"> <i
+                                 class="fa fa-angle-double-left"></i> Back</button>
+                           <button class="btn btn-primary borderbtn" type="button" (click)="tabChange(3)"
+                              [disabled]="additionalFormbtn || lessonProcessForm.controls['_Keywords' || 'issuedescription' || 'title' || 'Recommendation' || 'typeoflesson'].invalid">Next
+                              <i class="fa fa-angle-double-right"></i></button>
+                        </div>
+
+                     </tab>
+                     <tab heading="Additional Information" [active]="additionalTab" [disabled]="additionaldTab">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Impact Category <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectcategory" placeholder="Impact category" type="text"> -->
+                                    <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.impectcategory.errors }"
+                                       [(ngModel)]="impectcategory" formControlName="impectcategory" id="icat">
+                                       <option value="" selected>Select Impact Category</option>
+                                       <option *ngFor="let category of categoriesAsObjects" value="{{category.ID}}">
+                                          {{category.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="text-input">Impact Level <span
+                                       class="danger">*</span></label>
+                                 <div class="col-md-9">
+                                    <!-- <input class="form-control" id="text-input" name="impectlevel" placeholder="Impact level" type="text"> -->
+                                    <select class="form-control"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.impectlevel.errors }"
+                                       [(ngModel)]="impectlevel" formControlName="impectlevel" id="implevel">
+                                       <option value="" selected>Select Impact Level</option>
+                                       <option *ngFor="let impectlevel of impactlevelAsObjects"
+                                          value="{{impectlevel.ID}}">{{impectlevel.Name}}</option>
+                                    </select>
+                                 </div>
+                                 <div class="help-tip">
+                                    <table>
+                                       <tr>
+                                          <th style="text-align: center;">LOW</th>
+                                          <th style="text-align: center;">Low – Concise</th>
+                                          <th style="text-align: center;">MODERATE</th>
+                                          <th style="text-align: center;">Moderate - Concise</th>
+                                          <th style="text-align: center;">HIGH</th>
+                                          <th style="text-align: center;">High - Concise</th>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Quality Mgmt system or process is in place and was followed for
+                                                   design control and post launched products.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul style="margin-bottom: -18%;">
+                                                <li>
+                                                   Low/no impact to final product performance and/or intended use.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Quality Mgmt system or process is in place, but are not being
+                                                   followed for design control and post launched products.
+                                                </li>
+                                             </ul>
+                                          </td>
+
+                                          <td>
+                                             <ul class="cssforsmall" style="margin-bottom: -5%;">
+                                                <li>
+                                                   Moderate impact to final product performance and/or intended use.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          
+
+                                          <td>
+                                             <ul>
+                                                <li class="cssforsmallscreen" style="margin-bottom: 16%;">
+                                                   Failure of Quality Mgmt system or process.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul class="highcssforsmall" >
+                                                <li>
+                                                   High / Significant impact to final product performance and/or intended use.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <ul>
+                                                <li class="issueforsmall">
+                                                   The issue has no effect on product design/improvements,product
+                                                   performance,the established products/customer requirements or
+                                                   intended use
+                                                   of the finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Documentation was considered compliant during review.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li class="issueforsmall" >
+                                                   The issue has more than a negligible effect on product
+                                                   design/improvements,product performance the established
+                                                   product/customer
+                                                   requirements or intended use of the finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Documentation was found to have moderate insufficiencies that required update.
+                                                </li>
+                                             </ul>
+                                          </td>
+
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   The issue has significant effect on product
+                                                   design/improvements,product
+                                                   performance,the established product/customer requirements or intended
+                                                   use
+                                                   of th finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Documentation was found to be critically insufficient and required significant effort to bring into compliance.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   The issue has no effect on product design/improvements,product
+                                                   performance,the established products/customer requirements or
+                                                   intended use
+                                                   of the finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+
+                                             
+                                             <ul>
+                                                <li>
+                                                   The issue has more than a negligible effect on product
+                                                   design/improvements,product performance the established
+                                                   product/customer
+                                                   requirements or intended use of the finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   The issue has significant effect on product
+                                                   design/improvements,product
+                                                   performance,the established product/customer requirements or intended
+                                                   use
+                                                   of th finished product.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <ul>
+                                                <li >
+                                                   Project activities and documentation are compliant.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Project activities and documentation are in place,but are not
+                                                   compliant.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li>
+                                                   Project activities and documentation are not in place.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td>
+                                             <ul>
+                                                <li  class="relationforsmall">
+                                                   Rational is provided for planned and unplanned project deviations.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li class="relationforsmall">
+                                                   Rational for planned and unplanned project deviations are provided
+                                                   but considered insignificant for resultant outcome.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                          <td>
+                                             <ul>
+                                                <li class="norelational">
+                                                   No rational is provided for planned and unplanned project deviations.
+                                                </li>
+                                             </ul>
+                                          </td>
+                                          <td>
+                                          </td>
+                                       </tr>
+
+
+                                    </table>
+                                    <!-- <p>Please insert All Impact level</p> -->
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6" *ngIf="fileDelete">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="file-input">Attachments</label>
+                                 <div class="col-md-9">
+                                    <p>The file will automatically delete after the form update.</p>
+                                    <p>Still, do you want to this file <a href="javascript:void(0);"
+                                          (click)="openFileInput()">change </a> or <a href="javascript:void(0);"
+                                          (click)="continueCurrentFile()">continue</a>?</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6" *ngIf="IsAttachmentExists">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="file-input">Attachments</label>
+                                 <div class="col-md-9">
+                                    <p>Current file name is <a [href]="currentFileUrl" target="_blank"
+                                          rel="noopener noreferrer" download>{{currentFileName}}</a></p>
+                                    <p>Do you want to this file <a href="javascript:void(0);"
+                                          (click)="openFileInput()">change </a> or <a href="javascript:void(0);"
+                                          (click)="deleteCurrentFile()">remove</a>?</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-6" *ngIf="IsChangeAttachment">
+                              <div class="form-group row">
+                                 <label class="col-md-3 col-form-label" for="file-input">Attachments</label>
+                                 <div class="input-group col-md-9">
+                                    <input #attachments type="file" id="attachments"
+                                       (change)="onFileChangeProcess($event)" class="form-control filellm"
+                                       [ngClass]="{'has-error is-invalid': isSubmitted && processFormControls.attachments.errors }"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                       <button class="form-control filellm" (click)="resetAttach()" type="button"> <i
+                                             class="fa fa-refresh"></i> Reset</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-actions col-sm-12 text-right">
+                           <button class="btn btn-secondary borderbtn" type="button" (click)="tabChange(2)"> <i
+                                 class="fa fa-angle-double-left"></i> Back</button>
+                           <button class="btn btn-primary borderbtn" type="submit"><span
+                                 class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                                 *ngIf="showLoader"></span>{{showLoader? 'Loading...' : 'Update'}} </button>
+                           <a class="btn btn-danger borderbtn"
+                              onclick="document.getElementById('id01').style.display='block'"
+                              style="cursor: pointer; color: #ffffff !important;">Delete <i class="fa fa-trash">
+                              </i></a>
+                        </div>
+                     </tab>
+                  </tabset>
+               </div>
+            </form>
+            <div bsModal id="id01" class="modal" style="top: 0% !important; background-color: #00000066;">
+               <form class="modal-content  row d-flex justify-content-center align-items-center"
+                  style="width: 30%; height: 185px; left: 36%; top: 30%;">
+                  <div class="container">
+                     <h3 style="text-align: center; margin-top:2%">Are you sure you want to delete this lesson?</h3>
+                     <div class="clearfix">
+                        <br>
+                        <br>
+                        <button type="button" (click)="deletelessonProcess(URLlessonPoccessID)"
+                           class="deletebtn btn btn-danger float-right borderbtn"> Delete <i class="fa fa-trash">
+                           </i></button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                           class="cancelbtn btn btn-primary float-right borderbtn">Cancel <i class="fa fa-close"></i>
+                        </button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-body">
+            <div style="text-align: center"> <i class="cui-circle-check icons font-2xl d-block mt-4 Iconsuccess"></i>
+            </div>
+            <p style="font-size: 1rem;padding: 1rem;text-align: center">Your lesson was successfully update.</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary borderbtn" (click)="reloadaction()">Ok</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- <div class="w3-container"> 
+     <div id="id01" class="w3-modal">
+       <div class="w3-modal-content">
+         <div class="w3-container">
+           <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+           <h1 style="text-align: center; margin-top:7%">Delete Lesson</h1>
+           <p style="text-align: center;">Are you sure you want to delete this lesson?</p>
+           <div class="clearfix">
+              <button  type="button" (click)="deletelesson()" class="deletebtn btn btn-danger float-right" style = "border-radius: 4px; " > Delete</button>
+              <button  type="button" onclick="document.getElementById('id01').style.display='none'" style = "border-radius: 4px;" class="cancelbtn btn btn-primary float-right">Cancel</button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div> -->

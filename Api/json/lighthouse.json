@@ -1,0 +1,21 @@
+{
+    "CLIENT_ID": "322244642666-kkgbp9q3rrh4jqrj65gb89nkt5o6651a.apps.googleusercontent.com",
+    "CLIENT_SECRET": "KnxrXhzA4CPjMalL8um4ljsU",
+    "REDIRECT_URL": "http://localhost:6001/api/login/auth/google/callback",
+    "BASE_URL": "http://localhost:4200",
+    "GOOGLE_USER_INFO": "https://www.googleapis.com/oauth2/v3/userinfo?access_token=",
+    "azureStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=sausdevlhstor1;AccountKey=D5uiu02H3LfSLsFg6E/mVLRXR6bvm6caZ+es/NmmMx5hvVlNLE9388RgxDujhpScW1WLhVnA1Pcx4NuDQKJgVA==;EndpointSuffix=core.windows.net",
+    "containerName": "lighthouse",
+    "ALLOW_DOMAIN": [
+        "ardentinfotech.com",
+        "ignatiuz.com",
+        "gmail.com"
+    ],
+    "SMTP_HOST": "smtp.gmail.com",
+    "SMTP_POST": 465,
+    "SMTP_SECURE": true,
+    "SMTP_USER": "no-reply@ignatiuz.com",
+    "SMTP_PASSWORD": "BizDev#007",
+    "PLATFORM_NAME": "lighthouse",
+    "ADMIN":"rahul.rai@ardentinfotech.com"
+}

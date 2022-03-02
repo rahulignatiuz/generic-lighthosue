@@ -1,0 +1,123 @@
+<div class="col-lg-12">
+    <div class="card">
+        <mat-accordion>
+            <!-- #enddocregion basic-panel -->
+            <mat-expansion-panel #expansionPanel [hideToggle]="true" style="display: contents; pointer-events: none;"
+                [expanded]="true">
+
+                <div class="card-body p-4 clearfix" style="pointer-events:all; display: block;" id="id04">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <select class="form-control" [(ngModel)]="selectLessonType"
+                                        (change)="togglelessonFlow($event)">
+                                        <option value="All Lesson type">Select Lesson Types</option>
+                                        <option value="1">Project</option>
+                                        <option value="2">Process</option>
+                                    </select>
+                                </div>
+                                <!-- <div class="help-tip">
+                              <p>Please insert Project type</p>
+                           </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <!-- <input type="text" placeholder="Search" name="searchString" [(ngModel)]="searchString" (keyup)="getfreesearchByFilter($event)"> -->
+                                    <div class="search-hero  has-search ">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control" placeholder="Enter text to search..."
+                                            [(ngModel)]="searchedKeyword">
+                                    </div>
+
+                                    <!-- <input type="text" #myinput [(ngModel)]="searchname" placeholder="enter your search terms" (input)="getfreesearchByFilter(searchname)"/> -->
+
+                                </div>
+                                <!-- <div class="help-tip">
+                              <p>Please insert Project type</p>
+                           </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3" *ngFor="let filter of filters">
+                            <div class="form-group row" *ngIf="filter.Type == 'autocomplete'">
+                                <div class="col-md-12">
+                                    <select class="form-control" [(ngModel)]="teller[filter.Name]"
+                                        (change)="onSelectFilters($event.target.value, filter._id)">
+                                        <option value=null>{{filter.Label}}</option>
+                                        <ng-container *ngIf="!filter.ParentLessonField">
+                                            <option *ngFor="let options of filterItemsOfType(filter._id)"
+                                                value="{{options._id}}">
+                                                {{options.Name}}</option>
+                                        </ng-container>
+                                        <ng-container *ngIf="filter.ParentLessonField">
+                                            <option *ngFor="let options of filterSubElement(filter)"
+                                                value="{{options._id}}">
+                                                {{options.Name}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group row" *ngIf="filter.Type == 'input_autocomplete'">
+                                <div class="col-md-12">
+                                    <tag-input *ngIf="!filter.ParentLessonField" [theme]="'minimal'" [maxItems]="1"
+                                        [(ngModel)]="filters[i].Name" (onAdd)="onSelectFilters($event, filter._id)"
+                                        [secondaryPlaceholder]="filter.Placeholder" [onlyFromAutocomplete]="true">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                            [autocompleteItems]="filterItemsOfType(filter._id)" [identifyBy]="'_id'"
+                                            [displayBy]="'Name'">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                    <tag-input *ngIf="filter.ParentLessonField" [theme]="'minimal'" [maxItems]="1"
+                                        [(ngModel)]="filters[i].Name" [secondaryPlaceholder]="filter.Placeholder">
+                                        <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true"
+                                            [autocompleteItems]="filterSubElement(filter)" [displayBy]="'Name'"
+                                            [identifyBy]="'_id'">
+                                        </tag-input-dropdown>
+                                    </tag-input>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <pre>{{teller | json}}</pre>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+<div class="col-12 col-lg-12" *ngFor="let lessons of results | filter:searchedKeyword">
+    <div class="card">
+        <div class="card-body p-3 clearfix" *ngIf="showMainCard">
+            <div class="float-right">
+                <button class="btn btn-primary float-right" type="button" (click)="editLesson(lessons[0].Lesson)"
+                    *ngIf="show">
+                    Edit </button>
+            </div>
+            <div class="row">
+                <ng-container *ngFor="let lesson of lessons">
+                    <div class="col-sm-3" *ngIf="lesson.Checkbox == true">
+                        <div class="form-group row">
+                            <div class="col-md-12 text-muted">
+                                <strong class="textcolor">{{lesson.Label}} : </strong><strong
+                                    class="h7 text-primary mb-0">{{lesson.Value}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--end Pagination-->
+<!-- <div class="col-12 col-lg-12" *ngIf="noResult">
+    <div class="alert alert-warning" role="alert" ng-reflect-ng-class="" ng-reflect-klass="alert alert-warning">
+        <strong>No results found</strong>
+    </div>
+</div> -->

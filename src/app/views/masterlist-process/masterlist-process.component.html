@@ -1,0 +1,109 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+       <div class="card-header">
+          Master Lists
+       </div>
+       <div class="table-title" >
+          <!-- <div class="row user-header"></div> -->
+          <div class="col-sm-6 headercls" >
+            <input  type="radio" id="Project" name="lesson" value="Project" [(ngModel)]="lessonfield"
+              (change)="togglelessonFlow(lessonfield)">
+            <label  for="Project" style="margin-left: 5px;">Project</label>
+            <input  type="radio" style="margin-left: 20px;" id="Process" name="lesson" value="Process"
+              [(ngModel)]="lessonfield" (change)="togglelessonFlow(lessonfield)">
+            <label  for="Process" style="margin-left: 5px;">Process</label><br>
+          </div>
+        </div>
+       <div class="">
+          <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" [selectedIndex]="0" mat-align-tabs="right">
+             <mat-tab *ngFor="let masterlist of results" label="{{masterlist._id}}">
+                <ng-template mat-tab-label>
+                   <span>{{masterlist.Label}}</span>
+                </ng-template>
+                <div class="text-left col px-md-4">
+                   <button (click)="showAddMasterData(masterlist._id);" class="btn btn-primary"> <i
+                         class="fa fa-plus-circle" style="font-size: 13px;"></i> Add New</button>
+                </div>
+ 
+                <div *ngIf="isDataShown">
+                   <div class="col px-md-4  mt-2" *ngIf="masterlist.ParentLessonField">
+                      <select class="form-control col-sm-3" (change)="onChangeParentField($event)">
+                         <option value="all"> All {{parentFieldLabel}}</option>
+                         <option *ngFor="let parentData of selecedParentData" value="{{parentData._id}}">
+                            {{parentData.Name}}</option>
+                      </select>
+                   </div>
+                   <div class="col px-md-4  mt-2">
+                      <table class="col-sm-12">
+                         <thead>
+                            <tr>
+                               <th class="tabheading">&nbsp;&nbsp;Edit</th>
+                               <th class="tabheading1">{{masterlist.Label}}</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <tr class="cusrorpointer" *ngFor="let data of selecedData">
+                               <td class="tdiconpadding">
+                                  <a>
+                                     <i (click)="masterlisteditdata(data._id,data.Name);" class="fa fa-plus-circle icon cursor"></i>
+                                  </a>
+                               </td>
+                               <td>{{data.Name}}</td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </div>
+                </div>
+             </mat-tab>
+          </mat-tab-group>
+       </div>
+       <form class="form-horizontal" *ngIf="!isDataShown" [formGroup]="masterData" (ngSubmit)="addMasterData()">
+          <div class="row">
+             <div class="card-body p-4 clearfix" style=" width: 75%;margin-right: 10%;">
+                <div class="col-sm-9">
+                   <div *ngIf="parentFieldLabel" class="form-group row">
+                      <label class="col-md-12 addformcsss" for="text-input">{{parentFieldLabel}}</label>
+                      <div class="col-md-6">
+                         <select class="form-control" formControlName="parent_field" [(ngModel)]="parent_field" id="ppt">
+                            <option value=null disabled> Select {{parentFieldLabel}}</option>
+                            <option *ngFor="let parentData of selecedParentData" value="{{parentData._id}}">
+                               {{parentData.Name}}</option>
+                         </select>
+                      </div>
+                   </div>
+                   <div class="form-group row labeldata">
+                      <label class="col-md-12 addformcsss" for="text-input">Name</label>
+                      <div class="col-md-6">
+ 
+                         <input class="form-control " [(ngModel)]="name" id="text-input" formControlName="name"
+                            placeholder="Name" type="text">
+                         <div
+                            *ngIf="masterData.controls['name'].invalid && (masterData.controls['name'].dirty || masterData.controls['name'].touched)"
+                            class="custom-errMsg">
+                            <div *ngIf="masterData.controls['name'].errors.required">
+                               Name is required.
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-sm-9">
+                   <button class="btn btn-primary" type="submit"
+                      style="border-radius: 4px; margin-right: -27%;margin-left:20px;"><i class="fa fa-save"
+                         style="font-size:15px"></i> Save</button>
+                </div>
+             </div>
+          </div>
+       </form>
+    </div>
+ </div>
+ <div bsModal #masterlisteditview="bs-modal" class="modal">
+    <form class="modal-content row forms" [formGroup]="editMasterlistForm" (ngSubmit)="updatemasterlistlabels();">
+      <h2 class="text-muted">Edit Masterlist</h2>
+      <div class="form-group">
+        <label for="label">Name</label>
+        <input type="text" [(ngModel)]="EditmasterlistName" formControlName="EditmasterlistName" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-block btn-primary centerbtn">Save</button>
+    </form>
+  </div>
